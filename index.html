@@ -150,19 +150,26 @@
                                     <div class="col-md-6 col-sm-6 text-center">
                                         <div class="event-wrap animate-box">
                                             <span class="event-badge">Akad Nikah</span>
+
                                             <div class="event-col">
                                                 <i class="icon-clock"></i>
                                                 <span>09:00 AM</span>
                                                 <span>11:00 AM</span>
                                             </div>
+
                                             <div class="event-col">
                                                 <i class="icon-calendar"></i>
                                                 <span>Minggu 05</span>
                                                 <span>April, 2026</span>
                                             </div>
-                                            <p>Mushola Al-An'shor, Gang SMA 1 Pandeglang RT.01/RW.03 Kp. Pabrik, Kel. Cigadung, Kec. Karang Tanjung, Kab. Banten</p>
-                                        </div>
+
+                                            <p>
+                                                Mushola Al-An'shor, Gang SMA 1 Pandeglang RT.01/RW.03
+                                                Kp. Pabrik, Kel. Cigadung, Kec. Karang Tanjung, Kab. Banten
+                                            </p>                                    
+                                        </div>                                       
                                     </div>
+
                                     <div class="col-md-6 col-sm-6 text-center">
                                         <div class="event-wrap animate-box">
                                             <span class="event-badge">Resepsi</span>
@@ -180,6 +187,10 @@
                                         </div>
                                     </div>
 
+
+                                    <div class="wedding-verse">                 
+                                        <a class="btn btn-primary" style="button-radius:90px;text-align: center;" href="https://maps.app.goo.gl/5LqPmzToB1TEHedK6" target="_blank">Google Maps</a>   
+                                    </div>  
                                     <div class="wedding-verse">
                                         <p>
                                             Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan
@@ -234,56 +245,60 @@
 
                 <div class="testimoni-wrapper">
 
-                    <!-- FORM -->
-                    <div class="testimoni-form">
+                    <!-- FORM TESTIMONI -->
+                    <form id="form-testimoni" class="testimoni-grid">
+
                         <div class="form-group">
-                            <label>Nama</label>
-                            <input type="text" placeholder="Nama Anda">
+                            <input type="text" placeholder="Nama" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Pesan</label>
-                            <textarea placeholder="Tulis pesan..."></textarea>
+                            <input type="text" placeholder="Ucapan Singkat" required>
                         </div>
 
-                        <button type="submit" class="btn btn-submit btnHadir">Submit</button>
-                    </div>
+                        <div class="form-group full">
+                            <textarea placeholder="Tulis doa & harapan..." rows="4"></textarea>
+                        </div>
+
+                        <div class="form-group full">
+                            <button type="submit" class="btnHadir">Kirim Testimoni</button>
+                        </div>
+
+                    </form>
 
                     <!-- LIST UCAPAN -->
                     <div class="testimoni-list">
+
                         <div class="wish-item">
-                            <strong>Bunga :</strong>
-                            <p>XXXXXXX</p>
+                            <strong>Bunga</strong>
+                            <p>Semoga bahagia selalu ❤️</p>
                         </div>
 
                         <div class="wish-item">
-                            <strong>Fulan :</strong>
-                            <p>XXXXXXX</p>
+                            <strong>Fulan</strong>
+                            <p>Barakallah pernikahannya 🤍</p>
                         </div>
 
                         <div class="wish-item">
-                            <strong>Fulan :</strong>
-                            <p>XXXXXXX</p>
+                            <strong>Fulan</strong>
+                            <p>Semoga menjadi keluarga sakinah</p>
                         </div>
 
                         <div class="wish-item">
-                            <strong>Fulan :</strong>
-                            <p>XXXXXXX</p>
+                            <strong>Fulan</strong>
+                            <p>Langgeng sampai akhir hayat</p>
                         </div>
 
                         <div class="wish-item">
-                            <strong>Fulan :</strong>
-                            <p>XXXXXXX</p>
+                            <strong>Fulan</strong>
+                            <p>Semoga selalu diberkahi</p>
                         </div>
 
-                        <div class="wish-item">
-                            <strong>Fulan :</strong>
-                            <p>XXXXXXX</p>
-                        </div>
                     </div>
 
                 </div>
             </section>
+
 
             <div id="fh5co-counter" class="fh5co-bg fh5co-counter counter-footer">
 
@@ -331,17 +346,47 @@
 
                                 <!-- TOMBOL -->
                                 <div class="col-md-12 text-center counter-action">
-                                    <button class="btnHadir"
-                                            onclick="konfirmasiHadir()">
+                                    <button class="btnHadir" onclick="konfirmasiHadir()">
                                         Saya Akan Hadir
                                     </button>
 
-                                    <button class="btnHadir"
-                                            onclick="konfirmasiTidakHadir()">
+                                    <button class="btnHadir" onclick="konfirmasiTidakHadir()">
                                         Tidak Bisa Hadir
                                     </button>
                                 </div>
+                                <!-- REKENING BANK -->
+                                <div class="col-md-12 text-center rekening-section animate-box">
+                                    <h3 class="rekening-title">Rekening Pernikahan</h3>
+                                    <p class="rekening-subtitle">
+                                        Doa restu Anda merupakan hadiah terindah bagi kami.  
+                                        Namun apabila berkenan, dapat melalui rekening berikut:
+                                    </p>
 
+                                    <div class="rekening-grid">
+
+                                        <!-- BANK 1 -->
+                                        <div class="rekening-card">
+                                            <img src="images/bank-bca.png" alt="BCA">
+                                            <p class="rekening-nomor">5055041714</p>
+                                            <p class="rekening-atasnama">a.n. Bayu Bismantara</p>
+                                            <button class="btnHadir" onclick="copyRekening('5055041714')">
+                                                Salin Nomor
+                                            </button>
+                                        </div>
+
+                                        <!-- BANK 2 -->
+                                        <div class="rekening-card">
+                                            <img src="images/bank-BCA.png" alt="BCA">
+                                            <p class="rekening-nomor">5520707273</p>
+                                            <p class="rekening-atasnama">a.n. Aisyah Sekaryanti</p>
+                                            <button class="btnHadir" onclick="copyRekening('5520707273')">
+                                                Salin Nomor
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                
                                 <!-- FOOTER -->
                                 <div class="col-md-12 text-center counter-footer-text">
                                     <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
@@ -350,8 +395,8 @@
                                             Merupakan suatu kehormatan dan kebahagiaan bagi kami  
                                             apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
                                         </p>
-                                        <p>Terima kasih atas doa dan kehadiran Anda <span class="heart-red">❤</span></p>
-                                        <p> © 2026 <strong>Bayu & Aisyah</strong></p>
+                                        <p>❤️ Terima kasih atas doa dan kehadiran Anda ❤️</p>
+                                        <p> CopyRight © 2026 <strong>Bayu Bismantara's Code-Zone</strong></p>
                                     </div>
                                     <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
                                     </div>

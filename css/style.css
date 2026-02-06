@@ -266,15 +266,32 @@ h1, h2, h3, h4, h5, h6, figure {
     color: #000 !important;
 }
 
-/* BUTTON */
-.btnHadir {
-    background-color: #f48fb1 !important; /* pink lembut */
-    border-color: black !important;
-    color: #ffffff !important;
-    font-weight: 600;
-    padding: 10px 22px;
-    border-radius: 30px;
+/* ===============================
+   BUTTON KONFIRMASI GRID INLINE
+================================ */
+
+.counter-action {
+    display: inline-grid;
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    gap: 16px;
+    width: 100%;
+    justify-content: center;
 }
+
+/* MOBILE ? TURUN KE BAWAH */
+@media (max-width: 480px) {
+    .counter-action {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* OPTIONAL: RAPIN TOMBOL */
+.btnHadir {
+    height: 48px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
 .btnHadir:hover {
     background-color: #f48fb1 !important; /* pink lebih gelap */
     border-color: black !important;
@@ -1100,6 +1117,10 @@ form label {
     -ms-border-radius: 50%;
     border-radius: 50%;
 }
+.heart-red {
+  color: #f48fb1;
+  font-size: 26px;
+}
 @media screen and (max-width: 768px) {
     .heart {
         display: none;
@@ -1252,9 +1273,6 @@ form label {
     font-weight: 600;
     color: rgba(0, 0, 0, 0.4);
 }
-/* =========================
-   CUSTOM TESTIMONI
-========================= */
 /* =========================================
    CUSTOM TESTIMONI - TEXT PUTIH
 ========================================= */
@@ -1271,88 +1289,134 @@ form label {
     color: #ffffff !important;
 }
 
+/* =====================================
+   CUSTOM TESTIMONI
+===================================== */
+
 #custom-testimoni {
-    background: #ffb3d9;
-    padding: 40px 20px;
-    margin-bottom: 50px;
+    padding: 60px 20px;
+    background: #e91e63;
+    margin-bottom: 30px;
 }
 
 .testimoni-title {
     text-align: center;
-    font-family: 'Sacramento', cursive;
-    font-size: 84px;
-    margin-bottom: 30px;
+    color: #ffffff;
+    margin-bottom: 24px;
 }
 
-/* WRAPPER */
+/* =====================================
+   WRAPPER GRID
+===================================== */
+
 .testimoni-wrapper {
-    display: flex;
-    gap: 30px;
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
+    gap: 24px;
     max-width: 1000px;
     margin: auto;
 }
 
-/* FORM */
-.testimoni-form {
-    flex: 1;
+/* =====================================
+   FORM GRID
+===================================== */
+
+.testimoni-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
+.testimoni-grid .full {
+    grid-column: 1 / -1;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #000;
-    background: #ffb3d9;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.7);
+    background: transparent;
+    color: #ffffff;
 }
 
-.form-group textarea {
-    height: 100px;
-    resize: none;
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255,255,255,0.8);
 }
 
-/* BUTTON */
-.btn-submit {
-    background: #2b6cb0;
-    color: #fff;
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #ffffff;
+}
+
+/* =====================================
+   BUTTON
+===================================== */
+
+.btnHadir {
+    background: #f48fb1;
+    color: #ffffff;
     border: none;
-    padding: 8px 16px;
+    padding: 12px;
+    border-radius: 30px;
     cursor: pointer;
+    font-weight: 600;
+    width: 100%;
 }
 
-/* LIST */
+/* =====================================
+   LIST TESTIMONI
+===================================== */
+
 .testimoni-list {
-    flex: 1;
-    border-left: 1px solid #000;
-    padding-left: 20px;
-    border : 1px solid gray;
-    
-    /* SCROLL */
-    max-height: 300px;      /* atur tinggi area */
+    max-height: 360px;
     overflow-y: auto;
+    padding-right: 6px;
 }
 
 .wish-item {
-    margin-bottom: 15px;
-}
-#custom-testimoni input,
-#custom-testimoni textarea {
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
     color: #ffffff;
-    border: 1px solid gray;
 }
 
-/* Placeholder */
-#custom-testimoni ::placeholder {
-    color: rgba(255,255,255,0.8);
+.wish-item strong {
+    display: block;
+    margin-bottom: 4px;
 }
+
+/* =====================================
+   SCROLLBAR
+===================================== */
+
+.testimoni-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.testimoni-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.5);
+    border-radius: 6px;
+}
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 768px) {
+    .testimoni-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .testimoni-list {
+        max-height: 300px;
+    }
+}
+
 /* =========================
    CUSTOM TESTIMONI END
 ========================= */
@@ -2132,6 +2196,74 @@ form label {
 }
 .gallery-slide-item img {
     animation: zoomSlow 12s ease-in-out infinite;
+}
+/* ===============================
+   REKENING SECTION
+================================ */
+
+.rekening-section {
+    margin-top: 48px;
+    color: #fff;
+}
+
+.rekening-title {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.rekening-subtitle {
+    opacity: 0.85;
+    margin-bottom: 28px;
+}
+
+/* GRID */
+.rekening-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+/* CARD */
+.rekening-card {
+    background: rgba(255,255,255,0.12);
+    border-radius: 18px;
+    padding: 24px 18px;
+    text-align: center;
+}
+
+/* LOGO */
+.rekening-card img {
+    height: 80px;
+    margin-bottom: 12px;
+}
+
+/* TEXT */
+.rekening-nama,
+.rekening-nomor,
+.rekening-atasnama{
+    color: black;
+}
+.rekening-nama {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.rekening-nomor {
+    font-size: 20px;
+    letter-spacing: 1px;
+    margin: 6px 0;
+}
+
+.rekening-atasnama {
+    opacity: 0.85;
+    margin-bottom: 14px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .rekening-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @keyframes zoomSlow {

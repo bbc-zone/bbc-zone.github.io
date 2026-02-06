@@ -253,6 +253,11 @@ function formatGuestName(name) {
             .map(word => word === '&' ? '&' : word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
 }
+function copyRekening(nomor) {
+    navigator.clipboard.writeText(nomor).then(function () {
+        alert("Nomor rekening berhasil disalin");
+    });
+}
 
 $(document).ready(function () {
     $('#page').hide();
