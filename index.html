@@ -249,55 +249,40 @@
                     <form id="form-testimoni" class="testimoni-grid">
 
                         <div class="form-group">
-                            <input type="text" placeholder="Nama" required>
+                            <input type="text" id="nama" name="nama"
+                                   placeholder="Nama" required>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" placeholder="Ucapan Singkat" required>
+                            <input type="text" id="judul" name="judul"
+                                   placeholder="Ucapan Singkat" required>
                         </div>
 
                         <div class="form-group full">
-                            <textarea placeholder="Tulis doa & harapan..." rows="4"></textarea>
+                            <textarea id="pesan" name="pesan"
+                                      placeholder="Tulis doa & harapan..."
+                                      rows="4" required></textarea>
                         </div>
 
                         <div class="form-group full">
-                            <button type="submit" class="btnHadir">Kirim Testimoni</button>
+                            <button type="submit" class="btnHadir">
+                                Kirim Testimoni
+                            </button>
                         </div>
 
                     </form>
 
                     <!-- LIST UCAPAN -->
-                    <div class="testimoni-list">
-
-                        <div class="wish-item">
-                            <strong>Bunga</strong>
-                            <p>Semoga bahagia selalu ❤️</p>
-                        </div>
-
-                        <div class="wish-item">
-                            <strong>Fulan</strong>
-                            <p>Barakallah pernikahannya 🤍</p>
-                        </div>
-
-                        <div class="wish-item">
-                            <strong>Fulan</strong>
-                            <p>Semoga menjadi keluarga sakinah</p>
-                        </div>
-
-                        <div class="wish-item">
-                            <strong>Fulan</strong>
-                            <p>Langgeng sampai akhir hayat</p>
-                        </div>
-
-                        <div class="wish-item">
-                            <strong>Fulan</strong>
-                            <p>Semoga selalu diberkahi</p>
+                    <div class="testimoni-list" id="testimoniList">
+                        <div class="wish-item" id="default-list">
+                            <strong>Belum Ada Testimoni</strong>
                         </div>
 
                     </div>
 
                 </div>
             </section>
+
 
 
             <div id="fh5co-counter" class="fh5co-bg fh5co-counter counter-footer">
@@ -386,7 +371,7 @@
 
                                     </div>
                                 </div>
-                                
+
                                 <!-- FOOTER -->
                                 <div class="col-md-12 text-center counter-footer-text">
                                     <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
@@ -467,6 +452,152 @@
                                                     alert('Terima kasih atas informasinya 🙏');
                                                 }
 
+        </script>
+        <script>
+            const READ_API = "https://kyoritsu.co.id/WeddingApi/testimoni/read.php?limit=20";
+            const API_URL = "https://kyoritsu.co.id/WeddingApi/testimoni/create.php";
+            const COOLDOWN = 60; // 1 menit
+
+            document.addEventListener("DOMContentLoaded", function () {
+                loadTestimoni();
+
+                const form = document.getElementById("form-testimoni");
+                if (form) {
+                    form.addEventListener("submit", function (e) {
+                        e.preventDefault();
+
+                        if (!canSubmit()) {
+                            alert("Mohon tunggu beberapa menit sebelum mengirim testimoni lagi");
+                            return;
+                        }
+
+                        submitTestimoni();
+                    });
+                }
+            });
+
+            /* =========================
+             LOAD TESTIMONI
+             ========================= */
+            function loadTestimoni() {
+                fetch(READ_API)
+                        .then(res => res.json())
+                        .then(res => {
+                            if (res.status === "success") {
+
+                                // hapus default list kalau API hidup
+                                const defaultList = document.getElementById("default-list");
+                                if (defaultList)
+                                    defaultList.remove();
+
+                                renderTestimoni(res.data);
+                            }
+                        })
+                        .catch(err => console.error("Read API error", err));
+            }
+
+            /* =========================
+             RENDER LIST
+             ========================= */
+            function renderTestimoni(list) {
+                const container = document.getElementById("testimoniList");
+                if (!container)
+                    return;
+
+                container.innerHTML = "";
+
+                list.forEach(item => {
+                    const div = document.createElement("div");
+                    div.className = "wish-item";
+                    div.innerHTML = `
+            <strong>${escapeHTML(item.nama)} : ${escapeHTML(item.ucapan_singkat)}</strong>
+            <p>${escapeHTML(item.pesan)}</p>
+        `;
+                    container.appendChild(div);
+                });
+            }
+
+            /* =========================
+             SUBMIT
+             ========================= */
+            function submitTestimoni() {
+                const nama = document.getElementById("nama").value.trim();
+                const ucapan = document.getElementById("judul").value.trim(); // opsional
+                const pesan = document.getElementById("pesan").value.trim();
+
+                if (!nama || !pesan) {
+                    alert("Nama dan pesan wajib diisi");
+                    return;
+                }
+
+                const payload = {
+                    nama: nama,
+                    ucapan: ucapan,
+                    pesan: pesan
+                };
+
+                fetch(API_URL, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(payload)
+                })
+                        .then(res => res.json())
+                        .then(res => {
+                            if (res.status === "success") {
+                                localStorage.setItem("lastTestimoniTime", Date.now());
+                                addTestimoniRealtime(nama, pesan);
+                                document.getElementById("form-testimoni").reset();
+                                alert("Terima kasih atas doanya 🙏");
+                            } else {
+                                alert(res.message || "Gagal mengirim testimoni");
+                            }
+                        })
+                        .catch(() => alert("Tidak dapat terhubung ke server"));
+            }
+
+            /* =========================
+             REALTIME ADD
+             ========================= */
+            function addTestimoniRealtime(nama, pesan) {
+                const container = document.getElementById("testimoniList");
+                if (!container)
+                    return;
+
+                const div = document.createElement("div");
+                div.className = "wish-item";
+                div.innerHTML = `
+        <strong>${escapeHTML(nama)}</strong>
+        <p>${escapeHTML(pesan)}</p>
+    `;
+                container.prepend(div);
+            }
+
+            /* =========================
+             COOLDOWN
+             ========================= */
+            function canSubmit() {
+                const last = localStorage.getItem("lastTestimoniTime");
+                if (!last)
+                    return true;
+
+                const diff = (Date.now() - last) / 1000;
+                return diff > COOLDOWN;
+            }
+
+            /* =========================
+             XSS PROTECTION
+             ========================= */
+            function escapeHTML(text) {
+                return text.replace(/[&<>"']/g, function (m) {
+                    return {
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        '"': '&quot;',
+                        "'": '&#39;'
+                    }[m];
+                });
+            }
         </script>
     </body>
 </html>
