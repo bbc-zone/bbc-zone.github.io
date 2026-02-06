@@ -241,7 +241,7 @@
             </div>
 
             <section id="custom-testimoni">
-                <h2 class="testimoni-title">Testimoni</h2>
+                <h2 class="testimoni-title">Ucapan &amp; Doa</h2>
 
                 <div class="testimoni-wrapper">
 
@@ -259,14 +259,14 @@
                         </div>
 
                         <div class="form-group full">
-                            <textarea id="pesan" name="pesan"
-                                      placeholder="Tulis doa & harapan..."
+                            <textarea id="pesan" name="pesan" required
+                                      placeholder="Tulis Ucapan & Doa..."
                                       rows="4" required></textarea>
                         </div>
 
                         <div class="form-group full">
                             <button type="submit" class="btnHadir">
-                                Kirim Testimoni
+                                Kirim Ucapan
                             </button>
                         </div>
 
@@ -275,7 +275,7 @@
                     <!-- LIST UCAPAN -->
                     <div class="testimoni-list" id="testimoniList">
                         <div class="wish-item" id="default-list">
-                            <strong>Belum Ada Testimoni</strong>
+                            <strong>Belum Ada Ucapan</strong>
                         </div>
 
                     </div>
@@ -293,55 +293,64 @@
                     <div class="row">
                         <div class="display-t">
                             <div class="display-tc">
-
                                 <!-- TAMU DIUNDANG -->
                                 <div class="col-md-6 col-sm-6 animate-box">
                                     <div class="feature-center">
-                                        <span class="icon">
-                                            <i class="icon-users"></i>
-                                        </span>
+                                        <span class="icon"><i class="icon-users"></i></span>
 
                                         <span class="counter js-counter"
                                               data-from="0"
                                               data-to="500"
                                               data-speed="3000"
-                                              data-refresh-interval="50">0</span>
+                                              data-refresh-interval="50">
+                                            0
+                                        </span>
 
                                         <span class="counter-label">Tamu Diundang</span>
                                     </div>
                                 </div>
 
-                                <!-- TAMU KONFIRMASI -->
+                                <!-- KONFIRMASI HADIR -->
                                 <div class="col-md-6 col-sm-6 animate-box">
                                     <div class="feature-center">
-                                        <span class="icon">
-                                            <i class="icon-check"></i>
-                                        </span>
+                                        <span class="icon"><i class="icon-check"></i></span>
 
-                                        <span id="confirmedGuest"
-                                              class="counter js-counter"
-                                              data-from="0"
-                                              data-to="100"
-                                              data-speed="3000"
-                                              data-refresh-interval="50">0</span>
+                                        <span id="confirmedGuest" class="counter">
+                                            0
+                                        </span>
 
                                         <span class="counter-label">Konfirmasi Hadir</span>
                                     </div>
                                 </div>
 
-                                <!-- TOMBOL -->
-                                <div class="col-md-12 text-center counter-action">
-                                    <button class="btnHadir" onclick="konfirmasiHadir()">
+                                <!-- INPUT NAMA -->
+                                <div class="col-md-12 text-center">
+                                    <input type="text"
+                                           id="namaTamu"
+                                           class="form-control"
+                                           placeholder="Nama Anda"
+                                           style="max-width:300px;margin:20px auto;">
+                                </div>
+
+                                <!-- BUTTON -->
+                                <div class="col-md-12 counter-action">
+
+                                    <button class="btnHadir" onclick="kirimKonfirmasi('hadir')">
                                         Saya Akan Hadir
                                     </button>
 
-                                    <button class="btnHadir" onclick="konfirmasiTidakHadir()">
+                                    <button class="btnHadir btnTidakHadir"
+                                            onclick="kirimKonfirmasi('tidak_hadir')">
                                         Tidak Bisa Hadir
                                     </button>
+
+                                    <p id="infoKonfirmasi"
+                                       style="margin-top:10px;color:#fff;"></p>
                                 </div>
+
                                 <!-- REKENING BANK -->
                                 <div class="col-md-12 text-center rekening-section animate-box">
-                                    <h3 class="rekening-title">Rekening Pernikahan</h3>
+                                    <h3 class="rekening-title">Wedding Gift</h3>
                                     <p class="rekening-subtitle">
                                         Doa restu Anda merupakan hadiah terindah bagi kami.  
                                         Namun apabila berkenan, dapat melalui rekening berikut:
@@ -422,7 +431,6 @@
 
         <script>
                                                 var d = new Date(new Date().getTime() + 200 * 120 * 120 * 2000);
-                                                let hadir = 100;
                                                 simplyCountdown('.simply-countdown-one', {
                                                     year: 2026,
                                                     month: 4,
@@ -441,17 +449,6 @@
                                                     day: d.getDate(),
                                                     enableUtc: false
                                                 });
-
-                                                function konfirmasiHadir() {
-                                                    hadir++;
-                                                    document.getElementById('hadirCounter').innerText = hadir;
-                                                    alert('Terima kasih, konfirmasi Anda tersimpan 🙏');
-                                                }
-
-                                                function konfirmasiTidakHadir() {
-                                                    alert('Terima kasih atas informasinya 🙏');
-                                                }
-
         </script>
         <script>
             const READ_API = "https://kyoritsu.co.id/WeddingApi/testimoni/read.php?limit=20";
@@ -599,6 +596,90 @@
                 });
             }
         </script>
+        <script>
+            /* =========================
+             API URL
+             ========================= */
+            const READ_CONFIRM = "https://kyoritsu.co.id/WeddingApi/konfirmasi/read.php";
+            const CREATE_CONFIRM = "https://kyoritsu.co.id/WeddingApi/konfirmasi/create.php";
+
+            /* =========================
+             FINGERPRINT (STABIL)
+             ========================= */
+            function getFingerprint() {
+                const raw = [
+                    navigator.userAgent,
+                    navigator.language,
+                    screen.width + "x" + screen.height,
+                    new Date().getTimezoneOffset()
+                ].join("|");
+
+                return btoa(raw);
+            }
+
+            const fingerprint = getFingerprint();
+
+            /* =========================
+             LOAD AWAL
+             ========================= */
+            document.addEventListener("DOMContentLoaded", loadCounter);
+
+            function loadCounter() {
+                fetch(READ_CONFIRM + "?fp=" + encodeURIComponent(fingerprint))
+                        .then(res => res.json())
+                        .then(res => {
+                            if (res.status === "success") {
+                                document.getElementById("confirmedGuest").innerText = res.hadir;
+
+                                if (res.user_status) {
+                                    document.getElementById("infoKonfirmasi").innerText =
+                                            res.user_status === "hadir"
+                                            ? "Anda sudah konfirmasi HADIR"
+                                            : "Anda sudah konfirmasi TIDAK HADIR";
+                                }
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Read error", err);
+                        });
+            }
+
+            /* =========================
+             KIRIM KONFIRMASI
+             ========================= */
+            function kirimKonfirmasi(status) {
+                const nama = document.getElementById("namaTamu").value.trim();
+
+                if (!nama) {
+                    alert("Silakan isi nama terlebih dahulu");
+                    return;
+                }
+
+                fetch(CREATE_CONFIRM, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        nama: nama,
+                        status: status,
+                        fingerprint: fingerprint
+                    })
+                })
+                        .then(res => res.json())
+                        .then(res => {
+                            alert(res.message);
+                            if (res.status === "success") {
+                                loadCounter();
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Create error", err);
+                            alert("Gagal menghubungi server");
+                        });
+            }
+        </script>
+
     </body>
 </html>
 
