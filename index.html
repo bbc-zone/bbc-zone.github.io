@@ -73,10 +73,17 @@
         <div id="page">
             <nav class="fh5co-nav" role="navigation">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-xs-2">
-                            <div id="fh5co-logo"><a href="index.html">Wedding<strong>.</strong></a></div>
+                    <div class="row"><div class="col-xs-6">
+                            <div id="fh5co-logo">
+                                <a href="index.html">Wedding<strong>.</strong></a>
+                            </div>
                         </div>
+
+                        <div class="col-xs-6 text-right lang-switch">
+                            <button class="lang-btn active" onclick="setLang('id')">ID</button>
+                            <button class="lang-btn" onclick="setLang('jp')">JP</button>
+                        </div>
+
                     </div>
 
                 </div>
@@ -90,10 +97,10 @@
                             <div class="display-t">
                                 <div class="display-tc animate-box" data-animate-effect="fadeIn">
                                     <h1>Bayu &amp; Aisyah</h1>
-                                    <h2>We Are Getting Married</h2>
-                                    <h4 style="color:white;">05 April 2026</h4>
+                                    <h2 data-lang="header_title">We Are Getting Married</h2>
+                                    <h4 style="color:white;" data-lang="header_date">05 April 2026</h4>
                                     <div class="simply-countdown simply-countdown-one"></div>
-                                    <p><a href="#fh5co-event" class="btn btn-default btn-sm">Save the date</a></p>
+                                    <p><a href="#fh5co-event" class="btn btn-default btn-sm" data-lang="save_date">Save the date</a></p>
                                 </div>
                             </div>
                         </div>
@@ -105,9 +112,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box">
-                            <h2 id="greeting">Halo!</h2>
-                            <h3>05 April 2026 di Pandeglang, Jawa Barat</h3>
-                            <p>Kami Mengundang anda dalam acara pernikahan kami</p>
+                            <h2 id="greeting" data-lang="greeting">Halo!</h2>
+                            <h3 data-lang="invite_when_where">05 April 2026 di Pandeglang, Jawa Barat</h3>
+                            <p data-lang="invite_text">Kami Mengundang anda dalam acara pernikahan kami</p>
                         </div>
                     </div>
                     <div class="couple-wrap animate-box">
@@ -117,7 +124,7 @@
                             </div>
                             <div class="desc-groom">
                                 <h3>Aisyah Sekaryanti</h3>
-                                <p>Anak Pertama dari Bpk Suhendra Jaya &amp; Ibu Sutinah(Almh), Ibu Neneng</p>
+                                <p data-lang="binti">Anak Pertama dari Bpk Suhendra Jaya &amp; Ibu Sutinah(Almh), Ibu Neneng</p>
                             </div>
                         </div>
                         <p class="heart text-center"><i class="icon-heart2"></i></p>
@@ -127,7 +134,7 @@
                             </div>
                             <div class="desc-bride">
                                 <h3>Bayu Bismantara</h3>
-                                <p>Anak Pertama dari Bpk Eko Sukmono Hadi &amp; Ibu Siti Maslinah</p>
+                                <p data-lang="bin">Anak Pertama dari Bpk Eko Sukmono Hadi &amp; Ibu Siti Maslinah</p>
                             </div>
                         </div>
                     </div>
@@ -139,8 +146,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box">
-                            <span>Our Special Events</span>
-                            <h2>Acara Pernikahan</h2>
+                            <h2 data-lang="event_title">Acara Pernikahan</h2>
                         </div>
                     </div>
                     <div class="row">
@@ -149,7 +155,7 @@
                                 <div class="col-md-10 col-md-offset-1">
                                     <div class="col-md-6 col-sm-6 text-center">
                                         <div class="event-wrap animate-box">
-                                            <span class="event-badge">Akad Nikah</span>
+                                            <span class="event-badge" data-lang="akad">Akad Nikah</span>
 
                                             <div class="event-col">
                                                 <i class="icon-clock"></i>
@@ -172,7 +178,7 @@
 
                                     <div class="col-md-6 col-sm-6 text-center">
                                         <div class="event-wrap animate-box">
-                                            <span class="event-badge">Resepsi</span>
+                                            <span class="event-badge" data-lang="resepsi">Resepsi</span>
                                             <div class="event-col">
                                                 <i class="icon-clock"></i>
                                                 <span>11:00 AM</span>
@@ -189,10 +195,10 @@
 
 
                                     <div class="wedding-verse">                 
-                                        <a class="btn btn-primary" style="button-radius:90px;text-align: center;" href="https://maps.app.goo.gl/5LqPmzToB1TEHedK6" target="_blank">Google Maps</a>   
+                                        <a class="btn btn-primary" data-lang="google" style="button-radius:90px;text-align: center;" href="https://maps.app.goo.gl/5LqPmzToB1TEHedK6" target="_blank">Google Maps</a>   
                                     </div>  
                                     <div class="wedding-verse">
-                                        <p>
+                                        <p data-lang="ayat">
                                             Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan
                                             pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa
                                             tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang.
@@ -213,7 +219,7 @@
                         <div class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box">
                             <span>Our Moments</span>
                             <h2>Gallery</h2>
-                            <p>Momen kebahagiaan kami</p>
+                            <p data-lang="momen_text">Momen kebahagiaan kami</p>
                         </div>
                     </div>
 
@@ -232,47 +238,47 @@
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07513.png" alt="Gallery 3">
                                 </div>
-                                
+
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07516.png" alt="Gallery 4">
                                 </div>
-                                
+
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07547.png" alt="Gallery 5">
                                 </div>
-                                
+
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07549.png" alt="Gallery 6">
                                 </div>
-                                
+
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07553.png" alt="Gallery 7">
                                 </div>
-                                
+
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07554.png" alt="Gallery 8">
                                 </div>
-                                
+
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07575.png" alt="Gallery 9">
                                 </div>
-                                
+
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07583.png" alt="Gallery 10">
                                 </div>
-                                
+
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07586.png" alt="Gallery 11">
                                 </div>
-                                
+
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07588.png" alt="Gallery 12">
                                 </div>
-                                
+
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07590.png" alt="Gallery 13">
                                 </div>
-                                
+
                                 <div class="gallery-slide-item">
                                     <img src="images/DSC07593.png" alt="Gallery 14">
                                 </div>
@@ -285,7 +291,7 @@
             </div>
 
             <section id="custom-testimoni">
-                <h2 class="testimoni-title">Ucapan &amp; Doa</h2>
+                <h2 class="testimoni-title" data-lang="ucapan">Ucapan &amp; Doa</h2>
 
                 <div class="testimoni-wrapper">
 
@@ -294,22 +300,22 @@
 
                         <div class="form-group">
                             <input type="text" id="nama" name="nama"
-                                   placeholder="Nama" required>
+                                   data-lang="nama" placeholder="Nama" required>
                         </div>
 
                         <div class="form-group">
                             <input type="text" id="judul" name="judul"
-                                   placeholder="Ucapan Singkat" required>
+                                   data-lang="ucapan_singkat" placeholder="Ucapan Singkat" required>
                         </div>
 
                         <div class="form-group full">
-                            <textarea id="pesan" name="pesan" required
+                            <textarea id="pesan" name="pesan" required data-lang="ucapan_text"
                                       placeholder="Tulis Ucapan & Doa..."
                                       rows="4" required></textarea>
                         </div>
 
                         <div class="form-group full">
-                            <button type="submit" class="btnHadir">
+                            <button type="submit" class="btnHadir" data-lang="button_kirim">
                                 Kirim Ucapan
                             </button>
                         </div>
@@ -350,7 +356,7 @@
                                             0
                                         </span>
 
-                                        <span class="counter-label">Tamu Diundang</span>
+                                        <span class="counter-label" data-lang="tamu_undangan">Tamu Diundang</span>
                                     </div>
                                 </div>
 
@@ -363,7 +369,7 @@
                                             0
                                         </span>
 
-                                        <span class="counter-label">Konfirmasi Hadir</span>
+                                        <span class="counter-label" data-lang="tamu_hadir">Konfirmasi Hadir</span>
                                     </div>
                                 </div>
 
@@ -372,6 +378,7 @@
                                     <input type="text"
                                            id="namaTamu"
                                            class="form-control"
+                                           data-lang="nama"
                                            placeholder="Nama Anda"
                                            style="max-width:300px;margin:20px auto;">
                                 </div>
@@ -379,11 +386,11 @@
                                 <!-- BUTTON -->
                                 <div class="col-md-12 counter-action">
 
-                                    <button class="btnHadir" onclick="kirimKonfirmasi('hadir')">
+                                    <button class="btnHadir" onclick="kirimKonfirmasi('hadir')" data-lang="btnHadir">
                                         Saya Akan Hadir
                                     </button>
 
-                                    <button class="btnHadir btnTidakHadir"
+                                    <button class="btnHadir btnTidakHadir" data-lang="btnTidakHadir"
                                             onclick="kirimKonfirmasi('tidak_hadir')">
                                         Tidak Bisa Hadir
                                     </button>
@@ -428,12 +435,12 @@
                                 <!-- FOOTER -->
                                 <div class="col-md-12 text-center counter-footer-text">
                                     <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                                        <h1>Terima Kasih</h1>
-                                        <p>
+                                        <h1 data-lang="thank_title" data-lang-size>Terima Kasih</h1>
+                                        <p data-lang="thank_text">
                                             Merupakan suatu kehormatan dan kebahagiaan bagi kami  
                                             apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
                                         </p>
-                                        <p>❤️ Terima kasih atas doa dan kehadiran Anda ❤️</p>
+                                        <p data-lang="thank_footer">❤️ Terima kasih atas doa dan kehadiran Anda ❤️</p>
                                         <p> CopyRight © 2026 <strong>Bayu Bismantara's Code-Zone</strong></p>
                                     </div>
                                     <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
@@ -484,8 +491,6 @@
                                                     seconds: 0,
                                                     enableUtc: false
                                                 });
-
-
                                                 //jQuery example
                                                 $('#simply-countdown-losange').simplyCountdown({
                                                     year: d.getFullYear(),
@@ -501,12 +506,10 @@
 
             document.addEventListener("DOMContentLoaded", function () {
                 loadTestimoni();
-
                 const form = document.getElementById("form-testimoni");
                 if (form) {
                     form.addEventListener("submit", function (e) {
                         e.preventDefault();
-
                         if (!canSubmit()) {
                             alert("Mohon tunggu beberapa menit sebelum mengirim testimoni lagi");
                             return;
@@ -516,7 +519,6 @@
                     });
                 }
             });
-
             /* =========================
              LOAD TESTIMONI
              ========================= */
@@ -530,7 +532,6 @@
                                 const defaultList = document.getElementById("default-list");
                                 if (defaultList)
                                     defaultList.remove();
-
                                 renderTestimoni(res.data);
                             }
                         })
@@ -544,14 +545,12 @@
                 const container = document.getElementById("testimoniList");
                 if (!container)
                     return;
-
                 container.innerHTML = "";
-
                 list.forEach(item => {
                     const div = document.createElement("div");
                     div.className = "wish-item";
                     div.innerHTML = `
-            <strong>${escapeHTML(item.nama)} : ${escapeHTML(item.ucapan_singkat)}</strong>
+            <strong>${item.nama} : ${item.ucapan_singkat}</strong>
             <p>${escapeHTML(item.pesan)}</p>
         `;
                     container.appendChild(div);
@@ -565,7 +564,6 @@
                 const nama = document.getElementById("nama").value.trim();
                 const ucapan = document.getElementById("judul").value.trim(); // opsional
                 const pesan = document.getElementById("pesan").value.trim();
-
                 if (!nama || !pesan) {
                     alert("Nama dan pesan wajib diisi");
                     return;
@@ -576,7 +574,6 @@
                     ucapan: ucapan,
                     pesan: pesan
                 };
-
                 fetch(API_URL, {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
@@ -603,7 +600,6 @@
                 const container = document.getElementById("testimoniList");
                 if (!container)
                     return;
-
                 const div = document.createElement("div");
                 div.className = "wish-item";
                 div.innerHTML = `
@@ -620,7 +616,6 @@
                 const last = localStorage.getItem("lastTestimoniTime");
                 if (!last)
                     return true;
-
                 const diff = (Date.now() - last) / 1000;
                 return diff > COOLDOWN;
             }
@@ -646,7 +641,6 @@
              ========================= */
             const READ_CONFIRM = "https://kyoritsu.co.id/WeddingApi/konfirmasi/read.php";
             const CREATE_CONFIRM = "https://kyoritsu.co.id/WeddingApi/konfirmasi/create.php";
-
             /* =========================
              FINGERPRINT (STABIL)
              ========================= */
@@ -657,24 +651,20 @@
                     screen.width + "x" + screen.height,
                     new Date().getTimezoneOffset()
                 ].join("|");
-
                 return btoa(raw);
             }
 
             const fingerprint = getFingerprint();
-
             /* =========================
              LOAD AWAL
              ========================= */
             document.addEventListener("DOMContentLoaded", loadCounter);
-
             function loadCounter() {
                 fetch(READ_CONFIRM + "?fp=" + encodeURIComponent(fingerprint))
                         .then(res => res.json())
                         .then(res => {
                             if (res.status === "success") {
                                 document.getElementById("confirmedGuest").innerText = res.hadir;
-
                                 if (res.user_status) {
                                     document.getElementById("infoKonfirmasi").innerText =
                                             res.user_status === "hadir"
@@ -693,7 +683,6 @@
              ========================= */
             function kirimKonfirmasi(status) {
                 const nama = document.getElementById("namaTamu").value.trim();
-
                 if (!nama) {
                     alert("Silakan isi nama terlebih dahulu");
                     return;
@@ -722,6 +711,166 @@
                             alert("Gagal menghubungi server");
                         });
             }
+        </script>
+        <script>
+            /* =====================================================
+             Global variables
+             ===================================================== */
+            let guestName = "";
+
+            /* =====================================================
+             Get guest name from URL (?to=Nama)
+             ===================================================== */
+            const params = new URLSearchParams(window.location.search);
+            const guestParam = params.get("to");
+
+            if (guestParam) {
+                guestName = formatGuestName(decodeURIComponent(guestParam));
+            }
+
+            /* =====================================================
+             Language data (STRING ONLY)
+             ===================================================== */
+            const LANG_DATA = {
+                id: {
+                    header_title: "We are getting married",
+                    header_date: "05 April 2026",
+                    save_date: "Save the Date",
+                    greeting: "Halo",
+                    invite_text: "Kami mengundang Anda dalam acara pernikahan kami",
+                    event_title: "Acara Pernikahan",
+                    invite_when_where: "05 April 2026 di Pandeglang, Jawa Barat",
+                    binti: "Anak Pertama dari Bpk Suhendra Jaya & Ibu Sutinah(Almh), Ibu Neneng",
+                    bin: "Anak Pertama dari Bpk Eko Sukmono Hadi & Ibu Siti Maslinah",
+                    akad: "Akad Nikah",
+                    resepsi: "Resepsi",
+                    google: "Google Maps",
+                    ayat: "Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang.",
+                    momen_text: "Momen Kebahagiaan kami",
+                    ucapan: "Ucapan & Doa",
+                    nama: "Nama",
+                    ucapan_singkat: "Ucapan Singkat",
+                    ucapan_text: "Tulis Ucapan dan Doa Anda .... ",
+                    button_kirim: "Kirim Ucapan",
+                    tamu_undangan: "Tamu Diundang",
+                    tamu_hadir: "Tamu yang Hadir",
+                    btnHadir: "Saya akan Hadir",
+                    btnTidakHadir: "Saya Tidak Hadir",
+                    thank_title: "Terima Kasih",
+                    thank_text: "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.",
+                    thank_footer: "❤️ Terima kasih atas doa dan kehadiran Anda ❤️"
+                },
+                jp: {
+                    header_title: "結婚のご報告",
+                    header_date: "2026年4月5日",
+                    save_date: "日付を保存",
+                    greeting: "こんにちは",
+                    invite_text: "私たちの結婚式にご招待いたします",
+                    event_title: "結婚式のご案内",
+                    invite_when_where: "2026年4月5日、インドネシア・西ジャワ州パンデグランにて",
+                    binti: "Suhendra Jaya 様 と Sutinah（故）様 の長男  ならびに Neneng 様",
+                    bin: "Eko Sukmono Hadi 様 と Siti Maslinah 様 の長男",
+                    akad: "結婚儀式",
+                    resepsi: "披露宴",
+                    google: `会場アクセス Google マップ`,
+                    ayat: "また、神のしるしの一つとして、あなたがたが安らぎを得るために、あなたがた自身の中から配偶者を創られ、その間に愛と慈しみを置かれました。",
+                    momen_text: "私たちの幸福なひととき",
+                    ucapan: "祝福と祈り",
+                    nama: "名前",
+                    ucapan_singkat: "一言メッセージ",
+                    ucapan_text: "祝福と祈りのメッセージをお書きください",
+                    button_kirim: "送信する",
+                    tamu_undangan: "ご招待客",
+                    tamu_hadir: "出席者",
+                    btnHadir: "出席します",
+                    btnTidakHadir: "欠席します",
+                    thank_title: "ありがとうございます",
+                    thank_text: "皆様にご臨席いただき、    ご祝福とご厚情を賜れましたら幸いに存じます。",
+                    thank_footer: "❤️ ご祝福とご臨席に心より感謝申し上げます ❤️"
+                }
+            };
+
+            /* =====================================================
+             Set language
+             ===================================================== */
+            function setLang(lang) {
+                if (!LANG_DATA[lang])
+                    return;
+
+                localStorage.setItem("lang", lang);
+
+                document.querySelectorAll("[data-lang]").forEach(el => {
+                    const key = el.dataset.lang;
+
+                    if (!LANG_DATA[lang][key])
+                        return;
+
+                    let text = LANG_DATA[lang][key];
+
+                    // Tambahkan nama tamu ke greeting
+                    if (key === "greeting" && guestName) {
+                        if (lang === "jp") {
+                            text += ` ${guestName}様`;
+                        } else {
+                            text += ` ${guestName}`;
+                        }
+                    }
+
+                    // Jika element punya attribute placeholder
+                    if (el.hasAttribute("placeholder")) {
+                        el.setAttribute("placeholder", text);
+                    } else {
+                        el.textContent = text;
+                    }
+
+                    // ==============================
+                    // FONT SIZE KHUSUS BAHASA JEPANG
+                    // ==============================
+                    if (el.hasAttribute("data-lang-size")) {
+                        if (lang === "jp") {
+                            el.style.setProperty("color", "#f48fb1", "important");
+                            el.style.fontSize = "3em"; // kecilkan
+                            el.style.letterSpacing = "0.05em";
+                        }
+                    }
+                });
+
+
+                // Active button
+                document.querySelectorAll(".lang-btn").forEach(btn => {
+                    btn.classList.toggle("active", btn.dataset.lang === lang);
+                });
+            }
+
+            /* =====================================================
+             DOM Ready
+             ===================================================== */
+            document.addEventListener("DOMContentLoaded", () => {
+                const savedLang = localStorage.getItem("lang") || "id";
+                setLang(savedLang);
+            });
+
+            /* =====================================================
+             Helper (example)
+             ⚠ pastikan function ini ADA di project kamu
+             ===================================================== */
+            function formatGuestName(name) {
+                return name
+                        .replace(/\+/g, " ")
+                        .replace(/\b\w/g, c => c.toUpperCase());
+            }
+        </script>
+
+        <script>
+            const nav = document.querySelector(".fh5co-nav");
+
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add("scrolled");
+                } else {
+                    nav.classList.remove("scrolled");
+                }
+            });
         </script>
 
     </body>

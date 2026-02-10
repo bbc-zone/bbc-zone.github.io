@@ -2307,3 +2307,61 @@ form label {
         font-size: 15px;
     }
 }
+
+/* LANGUAGE SWITCH */
+.lang-switch {
+    margin-top: 10px;
+}
+
+.lang-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.6);
+    color: #fff;
+    padding: 4px 10px;
+    margin-left: 5px;
+    font-size: 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+.lang-btn.active {
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+    .lang-switch {
+        margin-top: 15px;
+    }
+}
+
+/* NAV DEFAULT (ATAS HEADER) */
+.fh5co-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.95); /* hitam pekat */
+    transition: all 0.35s ease;
+}
+
+/* SAAT SCROLL */
+.fh5co-nav.scrolled {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.6); /* hitam transparan */
+    backdrop-filter: blur(6px); /* glass effect */
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+.fh5co-nav.scrolled a {
+    color: White;
+}
