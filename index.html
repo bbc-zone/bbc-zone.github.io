@@ -75,7 +75,7 @@
                 <div class="container">
                     <div class="row"><div class="col-xs-6">
                             <div id="fh5co-logo">
-                                <a href="index.html">Wedding<strong>.</strong></a>
+                                <a>Wedding<strong>.</strong></a>
                             </div>
                         </div>
 
@@ -827,10 +827,12 @@
                     // FONT SIZE KHUSUS BAHASA JEPANG
                     // ==============================
                     if (el.hasAttribute("data-lang-size")) {
+                        el.style.setProperty("color", "#f48fb1", "important");
                         if (lang === "jp") {
-                            el.style.setProperty("color", "#f48fb1", "important");
-                            el.style.fontSize = "3em"; // kecilkan
+                            el.style.fontSize = "1.8em"; // kecilkan
                             el.style.letterSpacing = "0.05em";
+                        } else {
+                            el.style.fontSize = "3em";
                         }
                     }
                 });
