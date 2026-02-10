@@ -1118,8 +1118,8 @@ form label {
     border-radius: 50%;
 }
 .heart-red {
-  color: #f48fb1;
-  font-size: 26px;
+    color: #f48fb1;
+    font-size: 26px;
 }
 @media screen and (max-width: 768px) {
     .heart {
@@ -2158,14 +2158,14 @@ form label {
     box-shadow: 0 25px 50px rgba(0,0,0,0.18);
 }
 
- /*rapatkan jarak deskripsi ke gallery */
+/*rapatkan jarak deskripsi ke gallery */
 #fh5co-gallery .section-heading p {
-  margin-bottom: 20px; /* default biasanya 40–60px */
+    margin-bottom: 20px; /* default biasanya 40–60px */
 }
 
 /* rapatkan jarak gallery dari atas */
 #fh5co-gallery .fh5co-gallery-slide {
-  margin-top: 0;
+    margin-top: 0;
 }
 .gallery-slide-item img {
     width: 100%;
@@ -2370,8 +2370,8 @@ form label {
    COUPLE SECTION BACKGROUND
 ===================================== */
 
-#fh5co-couple.couple-bg {
-    background: url("../images/background-white.png") center center / cover no-repeat;
+.couple-bg {
+    background: url("../images/background-white.png") center center / cover no-repeat !important;
     position: relative;
 }
 
@@ -2400,11 +2400,20 @@ form label {
     background: #fff;
     color: #F14E95;
 }
-
+.couple-gallery {
+    background: rgba(255, 255, 255, 0.60); /* putih tapi tembus dikit */
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    height: 950px;
+}
 /* RESPONSIVE */
 @media (max-width: 768px) {
     .couple-card {
         padding: 30px 20px;
-        height: 900px;
+        height: 1000px;
+    }
+    .couple-gallery{
+        height: 600px;
     }
 }
