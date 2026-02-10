@@ -2344,7 +2344,7 @@ form label {
 
 /* NAV DEFAULT (ATAS HEADER) */
 .fh5co-nav {
-    position: absolute;
+    position: static;
     top: 0;
     left: 0;
     width: 100%;
