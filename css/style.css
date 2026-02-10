@@ -2365,3 +2365,45 @@ form label {
 .fh5co-nav.scrolled a {
     color: White;
 }
+
+/* =====================================
+   COUPLE SECTION BACKGROUND
+===================================== */
+
+#fh5co-couple.couple-bg {
+    background: url("../images/background-white.png") center center / cover no-repeat;
+    position: relative;
+}
+
+/* =====================================
+   CARD PUTIH TRANSPARAN
+===================================== */
+
+.couple-card {
+    background: rgba(255, 255, 255, 0.60); /* putih tapi tembus dikit */
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    height: 900px;
+}
+
+/* TEKS BIAR PASTI TERBACA */
+.couple-card h1,
+.couple-card h2,
+.couple-card h3,
+.couple-card p {
+    color: #000 !important;
+}
+
+/* HATI TETAP PINK */
+.couple-card .heart i {
+    background: #fff;
+    color: #F14E95;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .couple-card {
+        padding: 30px 20px;
+    }
+}
