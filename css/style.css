@@ -2212,8 +2212,8 @@ form label {
 }
 
 .rekening-subtitle {
-    opacity: 0.85;
     margin-bottom: 28px;
+    color: black;
 }
 
 /* GRID */
