@@ -869,14 +869,6 @@
 
                     let text = LANG_DATA[lang][key];
 
-                    // Tambahkan nama tamu ke greeting
-                    if (key === "greeting" && guestName) {
-                        if (lang === "jp") {
-                            text += ` ${guestName}様`;
-                        } else {
-                            text += ` ${guestName}`;
-                        }
-                    }
 
                     // Jika element punya attribute placeholder
                     if (el.hasAttribute("placeholder")) {
