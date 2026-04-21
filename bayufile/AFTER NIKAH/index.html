@@ -39,6 +39,14 @@
 </head>
 <body>
 
+	<div class="box" id="loginBox">
+		<h3>Masukkan Password</h3>
+		<input type="password" id="password" placeholder="Password">
+		<br>
+		<button onclick="checkPassword()">Masuk</button>
+		<p id="error" style="color:red;"></p>
+	</div>
+
 	<div class="container" id="content">
 		<h2>Menu List</h2>
 		<ul>
@@ -51,13 +59,19 @@
 
 	<script>
 		const correctPassword = "05042026";
-		let input = prompt("Masukkan password:");
 
-		if (input === correctPassword) {
-			document.getElementById("content").style.display = "block";
-		} else {
-			alert("Password salah!");
-			document.body.innerHTML = "<h2>Akses ditolak</h2>";
+		function checkPassword() {
+			const input = document.getElementById("password").value;
+
+			if (input === correctPassword) {
+				document.getElementById("loginBox").style.display = "none";
+				document.getElementById("content").style.display = "block";
+			} else {
+				alert("Password salah!");
+				document.getElementById("loginBox").style.display = "none";
+				document.getElementById("content").style.display = "none";
+				document.body.innerHTML = "<h2>Akses ditolak</h2>";
+			}
 		}
 	</script>
 </body>
