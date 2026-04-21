@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Dokumen Bayu Dan Aisyah</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            display: block;
+            padding: 12px;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+	<div class="container" id="content">
+		<h2>Menu List</h2>
+		<ul>
+			<li><a href="https://google.com">Google</a></li>
+			<li><a href="https://youtube.com">YouTube</a></li>
+			<li><a href="https://github.com">GitHub</a></li>
+			<li><a href="https://stackoverflow.com">Stack Overflow</a></li>
+		</ul>
+	</div>
+
+	<script>
+		const correctPassword = "05042026";
+		let input = prompt("Masukkan password:");
+
+		if (input === correctPassword) {
+			document.getElementById("content").style.display = "block";
+		} else {
+			alert("Password salah!");
+			document.body.innerHTML = "<h2>Akses ditolak</h2>";
+		}
+	</script>
+</body>
+</html>
