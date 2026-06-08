@@ -15,6 +15,11 @@ body {
   color: var(--ink);
   font-family: "Segoe UI", Arial, sans-serif;
   line-height: 1.7;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 .navbar {
@@ -432,6 +437,11 @@ body {
 
   .filter-btn {
     flex: 1;
+  }
+
+  .back-to-top {
+    bottom: 18px;
+    right: 14px;
   }
 
   .contact-form,
