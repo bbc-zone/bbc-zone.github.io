@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="Mockup UI Website Company Profile">
+  <defs>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101820"/>
+      <stop offset="1" stop-color="#1f4f55"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7fafb"/>
+      <stop offset="1" stop-color="#edf3f5"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#10212a" flood-opacity=".12"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect x="36" y="34" width="1208" height="652" rx="22" fill="#fff" filter="url(#shadow)"/>
+
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="36" y="34" width="1208" height="72" rx="22" fill="#ffffff"/>
+    <path d="M36 84h1208v22H36z" fill="#ffffff"/>
+    <text x="72" y="80" fill="#172026" font-size="28" font-weight="900">CompanySite</text>
+    <text x="340" y="76" fill="#68727d" font-size="15" font-weight="700">Tentang</text>
+    <text x="440" y="76" fill="#68727d" font-size="15" font-weight="700">Layanan</text>
+    <text x="544" y="76" fill="#68727d" font-size="15" font-weight="700">Portfolio</text>
+    <text x="660" y="76" fill="#68727d" font-size="15" font-weight="700">Kontak</text>
+    <rect x="1040" y="52" width="130" height="38" rx="9" fill="#1fb5a8"/>
+    <text x="1074" y="77" fill="#06201d" font-size="14" font-weight="900">Hubungi</text>
+  </g>
+
+  <rect x="72" y="132" width="1136" height="252" rx="18" fill="url(#hero)"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="118" y="194" fill="#6ff4e8" font-size="15" font-weight="900">PROFIL PERUSAHAAN</text>
+    <text x="118" y="246" fill="#ffffff" font-size="42" font-weight="900">Website bisnis yang rapi</text>
+    <text x="118" y="298" fill="#ffffff" font-size="42" font-weight="900">dan mudah dipercaya.</text>
+    <text x="118" y="340" fill="#c7d5da" font-size="17">Halaman layanan, company story, galeri, dan kontak dibuat responsif.</text>
+    <rect x="972" y="172" width="170" height="132" rx="18" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.2)"/>
+    <rect x="910" y="232" width="170" height="132" rx="18" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.22)"/>
+  </g>
+
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="72" y="420" width="340" height="178" rx="16" fill="#fff" stroke="#dfe7ea"/>
+    <text x="104" y="464" fill="#172026" font-size="21" font-weight="900">Tentang Kami</text>
+    <text x="104" y="500" fill="#68727d" font-size="15">Ringkasan bisnis, nilai utama,</text>
+    <text x="104" y="526" fill="#68727d" font-size="15">dan keunggulan perusahaan.</text>
+    <rect x="104" y="552" width="118" height="10" rx="5" fill="#1fb5a8"/>
+
+    <rect x="470" y="420" width="340" height="178" rx="16" fill="#fff" stroke="#dfe7ea"/>
+    <text x="502" y="464" fill="#172026" font-size="21" font-weight="900">Layanan</text>
+    <text x="502" y="500" fill="#68727d" font-size="15">Daftar layanan disusun jelas</text>
+    <text x="502" y="526" fill="#68727d" font-size="15">agar mudah dipahami calon klien.</text>
+    <rect x="502" y="552" width="118" height="10" rx="5" fill="#f2a541"/>
+
+    <rect x="868" y="420" width="340" height="178" rx="16" fill="#fff" stroke="#dfe7ea"/>
+    <text x="900" y="464" fill="#172026" font-size="21" font-weight="900">Kontak</text>
+    <text x="900" y="500" fill="#68727d" font-size="15">Form, WhatsApp, alamat, dan</text>
+    <text x="900" y="526" fill="#68727d" font-size="15">informasi bisnis mudah ditemukan.</text>
+    <rect x="900" y="552" width="118" height="10" rx="5" fill="#7c8cff"/>
+  </g>
+
+  <rect x="72" y="626" width="1136" height="24" rx="12" fill="#f1f6f7"/>
+</svg>

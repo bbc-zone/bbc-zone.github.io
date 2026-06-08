@@ -45,6 +45,18 @@ $(function () {
     scrollToSection("#home");
   });
 
+  $("#portfolioPreviewModal").on("show.bs.modal", function (event) {
+    const $trigger = $(event.relatedTarget);
+    const src = $trigger.data("preview-src");
+    const title = $trigger.data("preview-title") || "Preview Portfolio";
+
+    $("#portfolioPreviewTitle").text(title);
+    $("#portfolioPreviewImage").attr({
+      src,
+      alt: `Preview ${title}`
+    });
+  });
+
   $("#contactForm").on("submit", function (event) {
     event.preventDefault();
     const name = $("#name").val().trim() || "teman";

@@ -196,7 +196,10 @@
         <div class="row g-4 portfolio-grid">
           <div class="col-md-6 col-lg-4 portfolio-item" data-category="web">
             <article class="project-card">
-              <div class="project-visual visual-a"><i class="bi bi-bar-chart-line"></i></div>
+              <button class="project-preview" type="button" data-bs-toggle="modal" data-bs-target="#portfolioPreviewModal" data-preview-src="assets/img/portfolio-sales-dashboard.svg" data-preview-title="Dashboard Penjualan">
+                <img class="project-image" src="assets/img/portfolio-sales-dashboard.svg" alt="Mockup UI Dashboard Penjualan">
+                <span><i class="bi bi-arrows-fullscreen"></i></span>
+              </button>
               <div class="p-4">
                 <span class="project-type">Web App</span>
                 <h3>Dashboard Penjualan</h3>
@@ -206,7 +209,10 @@
           </div>
           <div class="col-md-6 col-lg-4 portfolio-item" data-category="desktop">
             <article class="project-card">
-              <div class="project-visual visual-b"><i class="bi bi-receipt-cutoff"></i></div>
+              <button class="project-preview" type="button" data-bs-toggle="modal" data-bs-target="#portfolioPreviewModal" data-preview-src="assets/img/portfolio-pos-app.svg" data-preview-title="Aplikasi POS">
+                <img class="project-image" src="assets/img/portfolio-pos-app.svg" alt="Mockup UI Aplikasi POS">
+                <span><i class="bi bi-arrows-fullscreen"></i></span>
+              </button>
               <div class="p-4">
                 <span class="project-type">Desktop</span>
                 <h3>Aplikasi POS</h3>
@@ -216,7 +222,10 @@
           </div>
           <div class="col-md-6 col-lg-4 portfolio-item" data-category="web">
             <article class="project-card">
-              <div class="project-visual visual-c"><i class="bi bi-building-check"></i></div>
+              <button class="project-preview" type="button" data-bs-toggle="modal" data-bs-target="#portfolioPreviewModal" data-preview-src="assets/img/portfolio-company-profile.svg" data-preview-title="Company Profile">
+                <img class="project-image" src="assets/img/portfolio-company-profile.svg" alt="Mockup UI Website Company Profile">
+                <span><i class="bi bi-arrows-fullscreen"></i></span>
+              </button>
               <div class="p-4">
                 <span class="project-type">Website</span>
                 <h3>Company Profile</h3>
@@ -295,6 +304,20 @@
       </div>
     </section>
   </main>
+
+  <div class="modal fade portfolio-modal" id="portfolioPreviewModal" tabindex="-1" aria-labelledby="portfolioPreviewTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5 fw-bold" id="portfolioPreviewTitle">Preview Portfolio</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body">
+          <img id="portfolioPreviewImage" src="" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
 
   <button class="back-to-top" type="button" aria-label="Kembali ke atas"><i class="bi bi-arrow-up"></i></button>
 
