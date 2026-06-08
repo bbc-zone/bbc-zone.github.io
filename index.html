@@ -1,968 +1,304 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Bayu &amp; Aisyah</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Wedding Invitation Bayu & Aisyah" />
-        <meta name="keywords" content="Online Wedding Invitation,Wedding Invitation, Invitation" />
-        <meta name="author" content="Bayu" />
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BBC-Zone | Bayu Bismantara's Code Zone</title>
+  <meta name="description" content="BBC-Zone adalah personal brand teknologi dari Bayu Bismantara untuk pengembangan website, aplikasi desktop, dan solusi digital.">
+  <meta name="author" content="Bayu Bismantara">
+  <meta name="keywords" content="BBC-Zone, Bayu Bismantara, Web Programmer, Desktop Programmer, Jasa Website, Aplikasi Desktop, Bootstrap, jQuery, PHP, MySQL">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#101820">
+  <link rel="canonical" href="https://bbc-zone.github.io/">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BBC-Zone">
+  <meta property="og:title" content="BBC-Zone | Bayu Bismantara's Code Zone">
+  <meta property="og:description" content="Personal brand teknologi dari Bayu Bismantara untuk website, sistem internal, aplikasi desktop, dan solusi digital.">
+  <meta property="og:url" content="https://bbc-zone.github.io/">
+  <meta property="og:image" content="https://bbc-zone.github.io/assets/img/hero-workspace.png">
+  <meta property="og:image:alt" content="Workspace programmer modern untuk BBC-Zone">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BBC-Zone | Bayu Bismantara's Code Zone">
+  <meta name="twitter:description" content="Web dan desktop programming untuk website, sistem internal, dan aplikasi bisnis.">
+  <meta name="twitter:image" content="https://bbc-zone.github.io/assets/img/hero-workspace.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "BBC-Zone",
+    "alternateName": "Bayu Bismantara's Code Zone",
+    "url": "https://bbc-zone.github.io/",
+    "logo": "https://bbc-zone.github.io/assets/img/favicon.svg",
+    "image": "https://bbc-zone.github.io/assets/img/hero-workspace.png",
+    "founder": {
+      "@type": "Person",
+      "name": "Bayu Bismantara",
+      "jobTitle": "Web and Desktop Programmer"
+    },
+    "description": "BBC-Zone adalah personal brand teknologi dari Bayu Bismantara untuk pengembangan website, aplikasi desktop, dan solusi digital.",
+    "areaServed": "Indonesia",
+    "email": "bayu.bisma1991@gmail.com",
+    "telephone": "+628111574745",
+    "sameAs": [
+      "https://bbc-zone.github.io/"
+    ]
+  }
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#mainNavbar" data-bs-offset="90" tabindex="0">
+  <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top navbar-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#home">BBC<span>-Zone</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="#about">Tentang</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Keahlian</a></li>
+          <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#process">Proses</a></li>
+          <li class="nav-item"><a class="btn btn-brand ms-lg-2" href="#contact">Kontak</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-        <!-- Facebook and Twitter integration -->
-        <meta property="og:title" content=""/>
-        <meta property="og:image" content=""/>
-        <meta property="og:url" content=""/>
-        <meta property="og:site_name" content=""/>
-        <meta property="og:description" content=""/>
-        <meta name="twitter:title" content="" />
-        <meta name="twitter:image" content="" />
-        <meta name="twitter:url" content="" />
-        <meta name="twitter:card" content="" />
-
-        <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
-        <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
-
-        <!-- Animate.css -->
-        <link rel="stylesheet" href="css/animate.css">
-        <!-- Icomoon Icon Fonts-->
-        <link rel="stylesheet" href="css/icomoon.css">
-        <!-- Bootstrap  -->
-        <link rel="stylesheet" href="css/bootstrap.css">
-
-        <!-- Magnific Popup -->
-        <link rel="stylesheet" href="css/magnific-popup.css">
-
-        <!-- Owl Carousel  -->
-        <link rel="stylesheet" href="css/owl.carousel.min.css">
-        <link rel="stylesheet" href="css/owl.theme.default.min.css">
-
-        <!-- Theme style  -->
-        <link rel="stylesheet" href="css/style.css">
-
-        <!-- Modernizr JS -->
-        <script src="js/modernizr-2.6.2.min.js"></script>
-        <!-- FOR IE9 below -->
-        <!--[if lt IE 9]>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
-
-        <style>
-            .timeline-panel{
-                background: rgba(0, 0, 0, 0.8);
-                backdrop-filter: blur(6px);
-            }
-            .timeline-heading,.timeline-body, .timeline-heading h3{
-                color:white;
-            }
-        </style>
-    </head>
-    <body>
-        <audio id="weddingMusic" loop>
-            <source src="audio/wedding-music.mp3" type="audio/mpeg">
-        </audio>
-        <!-- COVER UNDANGAN -->
-        <div id="cover">
-            <div class="cover-content">
-                <h1>Bayu &amp; Aisyah</h1>
-                <p>05 April 2026</p>
-                <p class="guest-label">Kepada</p>
-                <h3 class="guest-name" id="guestName">Tamu Undangan</h3>
-
-                <button id="openInvitation" class="btn btn-default">
-                    Buka Undangan
-                </button>
+  <header id="home" class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="container position-relative">
+      <div class="row min-vh-100 align-items-center">
+        <div class="col-lg-7 col-xl-6 py-5">
+          <p class="eyebrow mb-3">Bayu Bismantara's Code Zone</p>
+          <h1 class="display-4 fw-bold mb-4">BBC-Zone membangun aplikasi yang rapi, cepat, dan mudah digunakan.</h1>
+          <p class="lead mb-4">Personal brand teknologi dari Bayu Bismantara untuk website, sistem internal, dan aplikasi desktop yang stabil untuk pekerjaan harian.</p>
+          <div class="d-flex flex-wrap gap-3">
+            <a class="btn btn-brand btn-lg" href="#portfolio"><i class="bi bi-window-stack me-2"></i>Lihat Project</a>
+            <a class="btn btn-outline-light btn-lg" href="#contact"><i class="bi bi-chat-dots me-2"></i>Diskusi</a>
+          </div>
+          <div class="hero-stats mt-5">
+            <div>
+              <strong>2014</strong>
+              <span>Mulai coding</span>
             </div>
+            <div>
+              <strong>30+</strong>
+              <span>Project selesai</span>
+            </div>
+            <div>
+              <strong>Web</strong>
+              <span>Desktop & API</span>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </header>
 
-        <div class="fh5co-loader"></div>
-        <div id="page">
-            <nav class="fh5co-nav" role="navigation">
-                <div class="container">
-                    <div class="row"><div class="col-xs-6">
-                            <div id="fh5co-logo">
-                                <a>Wedding<strong>.</strong></a>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-6 text-right lang-switch">
-                            <button class="lang-btn active" onclick="setLang('id')">ID</button>
-                            <button class="lang-btn" onclick="setLang('jp')">JP</button>
-                        </div>
-
-                    </div>
-
-                </div>
-            </nav>
-
-            <header id="fh5co-header" class="fh5co-cover" role="banner" style="background-image:url(images/header.jpg);" data-stellar-background-ratio="0.5">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2 text-center">
-                            <div class="display-t">
-                                <div class="display-tc animate-box" data-animate-effect="fadeIn">
-                                    <h1>Bayu &amp; Aisyah</h1>
-                                    <h2 data-lang="header_title">We Are Getting Married</h2>
-                                    <h4 style="color:white;" data-lang="header_date">05 April 2026</h4>
-                                    <div class="simply-countdown simply-countdown-one"></div>
-                                    <p><a href="#fh5co-event" class="btn btn-default btn-sm" data-lang="save_date">Save the date</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <div id="fh5co-couple" class="couple-bg">
-                <div class="container">
-                    <div class="couple-card">
-
-                        <div class="row">
-                            <div class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box">
-                                <h2 id="greeting" data-lang="greeting">Halo!</h2>
-                                <h3 data-lang="invite_when_where">05 April 2026 di Pandeglang, Banten</h3>
-                                <p data-lang="invite_text">
-                                    Kami mengundang Anda serta Kerabat sekalian untuk menghadiri acara pernikahan kami
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="couple-wrap animate-box">
-                            <div class="couple-half">
-                                <div class="groom">
-                                    <img src="images/cewek.jpg" alt="groom" class="img-responsive">
-                                </div>
-                                <div class="desc-groom">
-                                    <h3>Aisyah Sekaryanti</h3>
-                                    <p data-lang="binti">
-                                        Anak Pertama dari Bpk Suhendra Jaya &amp; Ibu Sutinah (Almh), Ibu Neneng
-                                    </p>
-                                </div>
-                            </div>
-
-                            <p class="heart text-center"><i class="icon-heart2"></i></p>
-
-                            <div class="couple-half">
-                                <div class="bride">
-                                    <img src="images/cowok.jpg" alt="groom" class="img-responsive">
-                                </div>
-                                <div class="desc-bride">
-                                    <h3>Bayu Bismantara</h3>
-                                    <p data-lang="bin">
-                                        Anak Pertama dari Bpk Eko Sukmono Hadi &amp; Ibu Siti Maslinah
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+  <main>
+    <section id="about" class="section-pad">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-5">
+            <div class="profile-panel">
+              <div class="profile-avatar"><i class="bi bi-code-slash"></i></div>
+              <h2 class="h4 fw-bold mb-2">BBC-Zone, karya Bayu Bismantara.</h2>
+              <p class="text-secondary mb-4">Ruang kode untuk solusi praktis: dashboard, company profile, POS, inventory, reporting, dan integrasi data.</p>
+              <div class="tech-list">
+                <span>PHP</span><span>JavaScript</span><span>jQuery</span><span>Bootstrap</span><span>MySQL</span><span>VB.NET</span>
+              </div>
             </div>
-
-            <div id="fh5co-event" class="fh5co-bg" style="background-image:url(images/background-black.png);">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box">
-                            <h2 data-lang="event_title">Acara Pernikahan</h2>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="display-t">
-                            <div class="display-tc">
-                                <div class="col-md-10 col-md-offset-1">
-                                    <div class="col-md-6 col-sm-6 text-center">
-                                        <div class="event-wrap animate-box">
-                                            <span class="event-badge" data-lang="akad">Akad Nikah</span>
-
-                                            <div class="event-col">
-                                                <i class="icon-clock"></i>
-                                                <span>09:00 AM</span>
-                                                <span>11:00 AM</span>
-                                            </div>
-
-                                            <div class="event-col">
-                                                <i class="icon-calendar"></i>
-                                                <span>Minggu 05</span>
-                                                <span>April, 2026</span>
-                                            </div>
-
-                                            <p>
-                                                Mushola Al-An'shor, Gang SMA 1 Pandeglang RT.01/RW.13
-                                                Kp. Pabrik, Kel. Cigadung, Kec. Karang Tanjung, Kab. Banten
-                                            </p>                                    
-                                        </div>                                       
-                                    </div>
-
-                                    <div class="col-md-6 col-sm-6 text-center">
-                                        <div class="event-wrap animate-box">
-                                            <span class="event-badge" data-lang="resepsi">Resepsi</span>
-                                            <div class="event-col">
-                                                <i class="icon-clock"></i>
-                                                <span>11:00 AM</span>
-                                                <span>18:00 PM</span>
-                                            </div>
-                                            <div class="event-col">
-                                                <i class="icon-calendar"></i>
-                                                <span>Minggu 05</span>
-                                                <span>April, 2026</span>
-                                            </div>
-                                            <p>Samping Mushola Al-An'shor, Gang SMA 1 Pandeglang RT.01/RW.13 Kp. Pabrik, Kel. Cigadung, Kec. Karang Tanjung, Kab. Banten</p>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="wedding-verse"">                 
-                                        <a class="btn btn-primary" data-lang="google" style="button-radius:90px;text-align: center;" href="https://maps.app.goo.gl/GsXzgnErUKu3jjTX6" target="_blank">Google Maps</a>   
-                                    </div>  
-                                    <div class="wedding-verse"  style="background: rgba(255, 255, 255, 0.15);backdrop-filter: blur(6px); border-radius: 20px;padding:5px;">
-                                        <p data-lang="ayat">
-                                            Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan
-                                            pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa
-                                            tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang.
-                                        </p>
-                                        <span>(QS Ar-Rum : Ayat 21)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <div class="col-lg-7">
+            <p class="section-kicker">Tentang Saya</p>
+            <h2 class="section-title">Mengubah kebutuhan bisnis menjadi aplikasi yang bisa dipakai setiap hari.</h2>
+            <p class="section-text">Saya terbiasa menjembatani kebutuhan pengguna dengan implementasi teknis. Mulai dari merapikan alur kerja, membuat database, membangun interface, sampai memastikan aplikasi nyaman dipakai oleh tim operasional.</p>
+            <div class="row g-3 mt-3">
+              <div class="col-md-6">
+                <div class="mini-feature"><i class="bi bi-check2-circle"></i><span>Frontend responsif dan ringan</span></div>
+              </div>
+              <div class="col-md-6">
+                <div class="mini-feature"><i class="bi bi-check2-circle"></i><span>Backend terstruktur dan aman</span></div>
+              </div>
+              <div class="col-md-6">
+                <div class="mini-feature"><i class="bi bi-check2-circle"></i><span>Aplikasi desktop untuk operasional</span></div>
+              </div>
+              <div class="col-md-6">
+                <div class="mini-feature"><i class="bi bi-check2-circle"></i><span>Maintenance dan pengembangan fitur</span></div>
+              </div>
             </div>
-
-            <div id="fh5co-gallery" class="couple-bg">
-                <div class="container">
-                    <div class="couple-gallery">
-                        <div class="row">
-                            <div class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box">
-                                <span>Our Moments</span>
-                                <h2>Gallery</h2>
-                                <p data-lang="momen_text">Momen kebahagiaan kami</p>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-10 col-md-offset-1 animate-box">
-                                <div class="owl-carousel fh5co-gallery-slide">
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/lamaran1.png" alt="Gallery 1">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/lamaran2.png" alt="Gallery 2">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07508.png" alt="Gallery 5">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07509.png" alt="Gallery 6">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07513.png" alt="Gallery 7">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07516.png" alt="Gallery 8">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07547.png" alt="Gallery 9">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07549.png" alt="Gallery 10">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07553.png" alt="Gallery 11">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07554.png" alt="Gallery 12">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07575.png" alt="Gallery 13">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07583.png" alt="Gallery 14">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07586.png" alt="Gallery 15">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07588.png" alt="Gallery 16">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07590.png" alt="Gallery 17">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/DSC07593.png" alt="Gallery 18">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/lamaran3.png" alt="Gallery 3">
-                                    </div>
-
-                                    <div class="gallery-slide-item">
-                                        <img src="images/lamaran4.png" alt="Gallery 4">
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container" style="margin-top:100px;">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box">
-                            <span>We Love Each Other</span>
-                            <h2>Our Story</h2>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 col-md-offset-0">
-                            <ul class="timeline animate-box">
-                                <li class="animate-box">
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h3 class="timeline-title">Awal Bertemu</h3>
-                                            <span class="date">29 Juli 2025</span>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>
-                                                Perkenalan kami dimulai setelah kami match di dating apps July 2025 dan kami mulai membuka diri untuk saling ingin lebih mengenal satu sama lain.<br>
-                                                Berjalannya waktu komunikasi kami terjalin dengan baik dan kami menemukan kecocokan visi misi dalam relationship di masa depan, dan kami memutuskan untuk bertemu secara langsung untuk pertama kalinya 29 Agustus 2025.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-inverted animate-box">
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h3 class="timeline-title">Lamaran</h3>
-                                            <span class="date">11 Januari 2026</span>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Waktu berlalu hingga pada Minggu, 11 Januari 2026 menjadi hari penuh makna dimana kami memantapkan hati dan mengarahkan hubungan ini menuju ikatan yang lebih serius dan sakral.  Sebagai wujud keseriusan, kedua keluarga dipertemukan untuk saling mengenal, mengikat niat baik, serta menyatukan harapan dalam ridha-Nya.</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="animate-box">
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h3 class="timeline-title">Pernikahan</h3>
-                                            <span class="date">05 April 2026</span>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Minggu, 05 April 2026 , insyaAllah menjadi hari yang telah lama dinantikan. Hari di mana restu orang tua diikrarkan, doa-doa dipanjatkan, dan dengan penuh harap kami memohon ridho serta keberkahan dari Allah SWT atas ikatan suci pernikahan.</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="fh5co-couple-story" style="background-image:url(images/background-black.png);background-size:cover;background-position:center center;">
-            </div>
-
-            <section id="custom-testimoni"  style="background-image:url(images/background-black.png);background-size:cover;background-position:center center;">
-                <div style="background: rgba(0, 0, 0, 0.6);backdrop-filter: blur(6px);padding: 30px;border-radius: 30px;">
-                    <h2 class="testimoni-title" data-lang="ucapan">Ucapan &amp; Doa</h2>
-                    <div class="testimoni-wrapper">
-
-                        <!-- FORM TESTIMONI -->
-                        <form id="form-testimoni" class="testimoni-grid">
-
-                            <div class="form-group">
-                                <input type="text" id="nama" name="nama"
-                                       data-lang="nama" placeholder="Nama" required>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="text" id="judul" name="judul"
-                                       data-lang="ucapan_singkat" placeholder="Ucapan Singkat" required>
-                            </div>
-
-                            <div class="form-group full">
-                                <textarea id="pesan" name="pesan" required data-lang="ucapan_text"
-                                          placeholder="Tulis Ucapan & Doa..."
-                                          rows="4" required></textarea>
-                            </div>
-
-                            <div class="form-group full">
-                                <button type="submit" class="btnHadir" data-lang="button_kirim">
-                                    Kirim Ucapan
-                                </button>
-                            </div>
-
-                        </form>
-
-                        <!-- LIST UCAPAN -->
-                        <div class="testimoni-list" id="testimoniList">
-                            <div class="wish-item" id="default-list">
-                                <strong>Belum Ada Ucapan</strong>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
-
-            <div id="fh5co-counter" class="fh5co-bg fh5co-counter counter-footer">
-
-                <div class="overlay"></div>
-
-                <div class="container">
-                    <div class="row">
-                        <div class="display-t">
-                            <div class="display-tc">
-                                <!-- TAMU DIUNDANG -->
-                                <div class="col-md-6 col-sm-6 animate-box">
-                                    <div class="feature-center">
-                                        <span class="icon"><i class="icon-users"></i></span>
-
-                                        <span class="counter js-counter"
-                                              data-from="0"
-                                              data-to="500"
-                                              data-speed="3000"
-                                              data-refresh-interval="50">
-                                            0
-                                        </span>
-
-                                        <span class="counter-label" data-lang="tamu_undangan">Tamu Diundang</span>
-                                    </div>
-                                </div>
-
-                                <!-- KONFIRMASI HADIR -->
-                                <div class="col-md-6 col-sm-6 animate-box">
-                                    <div class="feature-center">
-                                        <span class="icon"><i class="icon-check"></i></span>
-
-                                        <span id="confirmedGuest" class="counter">
-                                            0
-                                        </span>
-
-                                        <span class="counter-label" data-lang="tamu_hadir">Konfirmasi Hadir</span>
-                                    </div>
-                                </div>
-
-                                <!-- INPUT NAMA -->
-                                <div class="col-md-12 text-center">
-                                    <input type="text"
-                                           id="namaTamu"
-                                           class="form-control"
-                                           data-lang="nama"
-                                           placeholder="Nama Anda"
-                                           style="max-width:300px;margin:20px auto;">
-                                </div>
-
-                                <!-- BUTTON -->
-                                <div class="col-md-12 counter-action">
-
-                                    <button class="btnHadir" onclick="kirimKonfirmasi('hadir')" data-lang="btnHadir">
-                                        Saya Akan Hadir
-                                    </button>
-
-                                    <button class="btnHadir btnTidakHadir" data-lang="btnTidakHadir"
-                                            onclick="kirimKonfirmasi('tidak_hadir')">
-                                        Tidak Bisa Hadir
-                                    </button>
-
-                                    <p id="infoKonfirmasi"
-                                       style="margin-top:10px;color:#fff;"></p>
-                                </div>
-
-                                <!-- REKENING BANK -->
-                                <div class="col-md-12 text-center rekening-section animate-box">
-                                    <h3 class="rekening-title">Wedding Gift</h3>
-                                    <p class="rekening-subtitle">
-                                        Doa restu Anda merupakan hadiah terindah bagi kami.  
-                                        Namun apabila berkenan, dapat melalui rekening berikut:
-                                    </p>
-
-                                    <div class="rekening-grid">
-
-                                        <!-- BANK 1 -->
-                                        <div class="rekening-card">
-                                            <img src="images/bank-bca.png" alt="BCA">
-                                            <p class="rekening-nomor">5055041714</p>
-                                            <p class="rekening-atasnama">a.n. Bayu Bismantara</p>
-                                            <button class="btnHadir" onclick="copyRekening('5055041714')">
-                                                Salin Nomor
-                                            </button>
-                                        </div>
-
-                                        <!-- BANK 2 -->
-                                        <div class="rekening-card">
-                                            <img src="images/bank-bca.png" alt="BCA">
-                                            <p class="rekening-nomor">5520707273</p>
-                                            <p class="rekening-atasnama">a.n. Aisyah Sekaryanti</p>
-                                            <button class="btnHadir" onclick="copyRekening('5520707273')">
-                                                Salin Nomor
-                                            </button>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <!-- FOOTER -->
-                                <div class="col-md-12 text-center counter-footer-text">
-                                    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                                        <h1 data-lang="thank_title" data-lang-size>Terima Kasih</h1>
-                                        <p data-lang="thank_text">
-                                            Merupakan suatu kehormatan dan kebahagiaan bagi kami  
-                                            apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
-                                        </p>
-                                        <p data-lang="thank_footer">❤️ Terima kasih atas doa dan kehadiran Anda ❤️</p>
-                                        <p> CopyRight © 2026 <strong>Bayu Bismantara's Code-Zone</strong></p>
-                                    </div>
-                                    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <div class="gototop js-top">
-            <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+    <section id="services" class="section-pad soft-bg">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-lg-7">
+            <p class="section-kicker">Keahlian</p>
+            <h2 class="section-title">Layanan yang bisa saya bantu.</h2>
+          </div>
         </div>
-        <!-- jQuery -->
-        <script src="js/jquery.min.js"></script>
-        <!-- jQuery Easing -->
-        <script src="js/jquery.easing.1.3.js"></script>
-        <!-- Bootstrap -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Waypoints -->
-        <script src="js/jquery.waypoints.min.js"></script>
-        <!-- Carousel -->
-        <script src="js/owl.carousel.min.js"></script>
-        <!-- countTo -->
-        <script src="js/jquery.countTo.js"></script>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-3">
+            <div class="service-card h-100">
+              <i class="bi bi-globe2"></i>
+              <h3>Website</h3>
+              <p>Company profile, landing page, admin panel, dan sistem berbasis web.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="service-card h-100">
+              <i class="bi bi-pc-display"></i>
+              <h3>Desktop App</h3>
+              <p>Aplikasi kasir, inventory, reporting, dan tools internal perusahaan.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="service-card h-100">
+              <i class="bi bi-database-check"></i>
+              <h3>Database</h3>
+              <p>Desain tabel, query, migrasi data, backup, dan optimasi kebutuhan laporan.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="service-card h-100">
+              <i class="bi bi-plug"></i>
+              <h3>Integrasi</h3>
+              <p>Integrasi API, export Excel/PDF, notifikasi, dan sinkronisasi data.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- Stellar -->
-        <script src="js/jquery.stellar.min.js"></script>
-        <!-- Magnific Popup -->
-        <script src="js/jquery.magnific-popup.min.js"></script>
-        <script src="js/magnific-popup-options.js"></script>
+    <section id="portfolio" class="section-pad">
+      <div class="container">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
+          <div>
+            <p class="section-kicker">Portfolio</p>
+            <h2 class="section-title mb-0">Contoh project unggulan.</h2>
+          </div>
+          <div class="filter-group" role="group" aria-label="Filter portfolio">
+            <button class="filter-btn active" data-filter="all">Semua</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+            <button class="filter-btn" data-filter="desktop">Desktop</button>
+          </div>
+        </div>
+        <div class="row g-4 portfolio-grid">
+          <div class="col-md-6 col-lg-4 portfolio-item" data-category="web">
+            <article class="project-card">
+              <div class="project-visual visual-a"><i class="bi bi-bar-chart-line"></i></div>
+              <div class="p-4">
+                <span class="project-type">Web App</span>
+                <h3>Dashboard Penjualan</h3>
+                <p>Monitoring transaksi, grafik performa, dan laporan periodik untuk manajemen.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4 portfolio-item" data-category="desktop">
+            <article class="project-card">
+              <div class="project-visual visual-b"><i class="bi bi-receipt-cutoff"></i></div>
+              <div class="p-4">
+                <span class="project-type">Desktop</span>
+                <h3>Aplikasi POS</h3>
+                <p>Kasir, stok barang, barcode, cetak struk, dan rekap penjualan harian.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4 portfolio-item" data-category="web">
+            <article class="project-card">
+              <div class="project-visual visual-c"><i class="bi bi-building-check"></i></div>
+              <div class="p-4">
+                <span class="project-type">Website</span>
+                <h3>Company Profile</h3>
+                <p>Website bisnis responsif dengan halaman layanan, galeri, dan form kontak.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script> -->
-        <script src="js/simplyCountdown.js"></script>
-        <!-- Main -->
-        <script src="js/main.js"></script>
+    <section id="process" class="section-pad dark-band">
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-5">
+            <p class="section-kicker text-accent">Workflow</p>
+            <h2 class="section-title text-white">Cara saya mengerjakan project.</h2>
+            <p class="section-text text-white-50">Alur dibuat jelas sejak awal supaya kebutuhan, jadwal, dan hasil akhirnya tidak mengambang.</p>
+          </div>
+          <div class="col-lg-7">
+            <div class="timeline">
+              <div class="timeline-item"><span>01</span><div><h3>Analisa</h3><p>Mengurai kebutuhan, role pengguna, data, dan target bisnis.</p></div></div>
+              <div class="timeline-item"><span>02</span><div><h3>Desain Solusi</h3><p>Menyusun struktur database, alur layar, dan prioritas fitur.</p></div></div>
+              <div class="timeline-item"><span>03</span><div><h3>Development</h3><p>Membangun fitur, validasi input, laporan, dan integrasi yang dibutuhkan.</p></div></div>
+              <div class="timeline-item"><span>04</span><div><h3>Testing & Support</h3><p>Uji coba bersama, perbaikan, deployment, dan pendampingan awal.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <script>
-                                                var d = new Date(new Date().getTime() + 200 * 120 * 120 * 2000);
-                                                simplyCountdown('.simply-countdown-one', {
-                                                    year: 2026,
-                                                    month: 4,
-                                                    day: 5,
-                                                    hours: 9,
-                                                    minutes: 0,
-                                                    seconds: 0,
-                                                    enableUtc: false
-                                                });
-                                                //jQuery example
-                                                $('#simply-countdown-losange').simplyCountdown({
-                                                    year: d.getFullYear(),
-                                                    month: d.getMonth() + 1,
-                                                    day: d.getDate(),
-                                                    enableUtc: false
-                                                });
-        </script>
-        <script>
-            const READ_API = "https://kyoritsu.co.id/WeddingApi/testimoni/read.php?limit=20";
-            const API_URL = "https://kyoritsu.co.id/WeddingApi/testimoni/create.php";
-            const COOLDOWN = 60; // 1 menit
+    <section id="contact" class="section-pad">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-lg-5">
+            <p class="section-kicker">Kontak</p>
+            <h2 class="section-title">Punya ide aplikasi atau website?</h2>
+            <p class="section-text">Ceritakan kebutuhanmu. Saya bisa bantu dari tahap konsep, perbaikan sistem lama, sampai membuat aplikasi baru.</p>
+            <div class="contact-list">
+              <a href="mailto:bayu.bisma1991@gmail.com"><i class="bi bi-envelope"></i>bayu.bisma1991@gmail.com</a>
+              <a href="https://wa.me/628111574745"><i class="bi bi-whatsapp"></i>0811-1574-745</a>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <form class="contact-form" id="contactForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="name">Nama</label>
+                  <input class="form-control" id="name" type="text" placeholder="Nama kamu" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="email">Email</label>
+                  <input class="form-control" id="email" type="email" placeholder="nama@email.com" required>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="project">Kebutuhan</label>
+                  <select class="form-select" id="project" required>
+                    <option value="">Pilih kebutuhan</option>
+                    <option>Website</option>
+                    <option>Aplikasi Desktop</option>
+                    <option>Maintenance</option>
+                    <option>Konsultasi</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="message">Pesan</label>
+                  <textarea class="form-control" id="message" rows="5" placeholder="Tuliskan gambaran project..." required></textarea>
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-brand btn-lg" type="submit"><i class="bi bi-send me-2"></i>Kirim Pesan</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-            document.addEventListener("DOMContentLoaded", function () {
-                loadTestimoni();
-                const form = document.getElementById("form-testimoni");
-                if (form) {
-                    form.addEventListener("submit", function (e) {
-                        e.preventDefault();
-                        if (!canSubmit()) {
-                            alert("Mohon tunggu beberapa menit sebelum mengirim testimoni lagi");
-                            return;
-                        }
+  <button class="back-to-top" type="button" aria-label="Kembali ke atas"><i class="bi bi-arrow-up"></i></button>
 
-                        submitTestimoni();
-                    });
-                }
-            });
-            /* =========================
-             LOAD TESTIMONI
-             ========================= */
-            function loadTestimoni() {
-                fetch(READ_API)
-                        .then(res => res.json())
-                        .then(res => {
-                            if (res.status === "success") {
-
-                                // hapus default list kalau API hidup
-                                const defaultList = document.getElementById("default-list");
-                                if (defaultList)
-                                    defaultList.remove();
-                                renderTestimoni(res.data);
-                            }
-                        })
-                        .catch(err => console.error("Read API error", err));
-            }
-
-            /* =========================
-             RENDER LIST
-             ========================= */
-            function renderTestimoni(list) {
-                const container = document.getElementById("testimoniList");
-                if (!container)
-                    return;
-                container.innerHTML = "";
-                list.forEach(item => {
-                    const div = document.createElement("div");
-                    div.className = "wish-item";
-                    div.innerHTML = `
-            <strong>${item.nama} : ${item.ucapan_singkat}</strong>
-            <p>${escapeHTML(item.pesan)}</p>
-        `;
-                    container.appendChild(div);
-                });
-            }
-
-            /* =========================
-             SUBMIT
-             ========================= */
-            function submitTestimoni() {
-                const nama = document.getElementById("nama").value.trim();
-                const ucapan = document.getElementById("judul").value.trim(); // opsional
-                const pesan = document.getElementById("pesan").value.trim();
-                if (!nama || !pesan) {
-                    alert("Nama dan pesan wajib diisi");
-                    return;
-                }
-
-                const payload = {
-                    nama: nama,
-                    ucapan: ucapan,
-                    pesan: pesan
-                };
-                fetch(API_URL, {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(payload)
-                })
-                        .then(res => res.json())
-                        .then(res => {
-                            if (res.status === "success") {
-                                localStorage.setItem("lastTestimoniTime", Date.now());
-                                addTestimoniRealtime(nama, pesan);
-                                document.getElementById("form-testimoni").reset();
-                                alert("Terima kasih atas doanya 🙏");
-                            } else {
-                                alert(res.message || "Gagal mengirim testimoni");
-                            }
-                        })
-                        .catch(() => alert("Tidak dapat terhubung ke server"));
-            }
-
-            /* =========================
-             REALTIME ADD
-             ========================= */
-            function addTestimoniRealtime(nama, pesan) {
-                const container = document.getElementById("testimoniList");
-                if (!container)
-                    return;
-                const div = document.createElement("div");
-                div.className = "wish-item";
-                div.innerHTML = `
-        <strong>${escapeHTML(nama)}</strong>
-        <p>${escapeHTML(pesan)}</p>
-    `;
-                container.prepend(div);
-            }
-
-            /* =========================
-             COOLDOWN
-             ========================= */
-            function canSubmit() {
-                const last = localStorage.getItem("lastTestimoniTime");
-                if (!last)
-                    return true;
-                const diff = (Date.now() - last) / 1000;
-                return diff > COOLDOWN;
-            }
-
-            /* =========================
-             XSS PROTECTION
-             ========================= */
-            function escapeHTML(text) {
-                return text.replace(/[&<>"']/g, function (m) {
-                    return {
-                        '&': '&amp;',
-                        '<': '&lt;',
-                        '>': '&gt;',
-                        '"': '&quot;',
-                        "'": '&#39;'
-                    }[m];
-                });
-            }
-        </script>
-        <script>
-            /* =========================
-             API URL
-             ========================= */
-            const READ_CONFIRM = "https://kyoritsu.co.id/WeddingApi/konfirmasi/read.php";
-            const CREATE_CONFIRM = "https://kyoritsu.co.id/WeddingApi/konfirmasi/create.php";
-            /* =========================
-             FINGERPRINT (STABIL)
-             ========================= */
-            function getFingerprint() {
-                const raw = [
-                    navigator.userAgent,
-                    navigator.language,
-                    screen.width + "x" + screen.height,
-                    new Date().getTimezoneOffset()
-                ].join("|");
-                return btoa(raw);
-            }
-
-            const fingerprint = getFingerprint();
-            /* =========================
-             LOAD AWAL
-             ========================= */
-            document.addEventListener("DOMContentLoaded", loadCounter);
-            function loadCounter() {
-                fetch(READ_CONFIRM + "?fp=" + encodeURIComponent(fingerprint))
-                        .then(res => res.json())
-                        .then(res => {
-                            if (res.status === "success") {
-                                document.getElementById("confirmedGuest").innerText = res.hadir;
-                                if (res.user_status) {
-                                    document.getElementById("infoKonfirmasi").innerText =
-                                            res.user_status === "hadir"
-                                            ? "Anda sudah konfirmasi HADIR"
-                                            : "Anda sudah konfirmasi TIDAK HADIR";
-                                }
-                            }
-                        })
-                        .catch(err => {
-                            console.error("Read error", err);
-                        });
-            }
-
-            /* =========================
-             KIRIM KONFIRMASI
-             ========================= */
-            function kirimKonfirmasi(status) {
-                const nama = document.getElementById("namaTamu").value.trim();
-                if (!nama) {
-                    alert("Silakan isi nama terlebih dahulu");
-                    return;
-                }
-
-                fetch(CREATE_CONFIRM, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        nama: nama,
-                        status: status,
-                        fingerprint: fingerprint
-                    })
-                })
-                        .then(res => res.json())
-                        .then(res => {
-                            alert(res.message);
-                            if (res.status === "success") {
-                                loadCounter();
-                            }
-                        })
-                        .catch(err => {
-                            console.error("Create error", err);
-                            alert("Gagal menghubungi server");
-                        });
-            }
-        </script>
-        <script>
-            /* =====================================================
-             Global variables
-             ===================================================== */
-            let guestName = "";
-
-            /* =====================================================
-             Get guest name from URL (?to=Nama)
-             ===================================================== */
-            const params = new URLSearchParams(window.location.search);
-            const guestParam = params.get("to");
-
-            if (guestParam) {
-                guestName = formatGuestName(decodeURIComponent(guestParam));
-            }
-
-            /* =====================================================
-             Language data (STRING ONLY)
-             ===================================================== */
-            const LANG_DATA = {
-                id: {
-                    header_title: "We are getting married",
-                    header_date: "Minggu, 05 April 2026",
-                    save_date: "Save the Date",
-                    greeting: "Halo",
-                    invite_text: "Kami mengundang Anda serta Kerabat sekalian untuk menghadiri acara pernikahan kami",
-                    event_title: "Acara Pernikahan",
-                    invite_when_where: "Minggu, 05 April 2026 di Pandeglang, Banten",
-                    binti: "Anak Pertama dari Bpk Suhendra Jaya & Ibu Sutinah (Almh), Ibu Neneng",
-                    bin: "Anak Pertama dari Bpk Eko Sukmono Hadi & Ibu Siti Maslinah",
-                    akad: "Akad Nikah",
-                    resepsi: "Resepsi",
-                    google: "Google Maps",
-                    ayat: "Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang.",
-                    momen_text: "Momen Kebahagiaan kami",
-                    ucapan: "Ucapan & Doa",
-                    nama: "Nama",
-                    ucapan_singkat: "Ucapan Singkat",
-                    ucapan_text: "Tulis Ucapan dan Doa Anda .... ",
-                    button_kirim: "Kirim Ucapan",
-                    tamu_undangan: "Tamu Diundang",
-                    tamu_hadir: "Tamu yang Hadir",
-                    btnHadir: "Saya akan Hadir",
-                    btnTidakHadir: "Saya Tidak Hadir",
-                    thank_title: "Terima Kasih",
-                    thank_text: "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.",
-                    thank_footer: "❤️ Terima kasih atas doa dan kehadiran Anda ❤️"
-                },
-                jp: {
-                    header_title: "結婚のご報告",
-                    header_date: "日曜日、2026年4月5日",
-                    save_date: "日付を保存",
-                    greeting: "こんにちは",
-                    invite_text: "私たちは、皆様ならびにご親族の皆様を 私たちの結婚式にご招待申し上げます。",
-                    event_title: "結婚式のご案内",
-                    invite_when_where: "2026年4月5日（日）、インドネシア・西ジャワ州パンデグラン",
-                    binti: "Suhendra Jaya 様 と Sutinah （故）様 の長男  ならびに Neneng 様",
-                    bin: "Eko Sukmono Hadi 様 と Siti Maslinah 様 の長男",
-                    akad: "結婚儀式",
-                    resepsi: "披露宴",
-                    google: `会場アクセス Google マップ`,
-                    ayat: "また、神のしるしの一つとして、あなたがたが安らぎを得るために、あなたがた自身の中から配偶者を創られ、その間に愛と慈しみを置かれました。",
-                    momen_text: "私たちの幸福なひととき",
-                    ucapan: "祝福と祈り",
-                    nama: "名前",
-                    ucapan_singkat: "一言メッセージ",
-                    ucapan_text: "祝福と祈りのメッセージをお書きください",
-                    button_kirim: "送信する",
-                    tamu_undangan: "ご招待客",
-                    tamu_hadir: "出席者",
-                    btnHadir: "出席します",
-                    btnTidakHadir: "欠席します",
-                    thank_title: "ありがとうございます",
-                    thank_text: "皆様にご臨席いただき、    ご祝福とご厚情を賜れましたら幸いに存じます。",
-                    thank_footer: "❤️ ご祝福とご臨席に心より感謝申し上げます ❤️"
-                }
-            };
-
-            /* =====================================================
-             Set language
-             ===================================================== */
-            function setLang(lang) {
-                if (!LANG_DATA[lang])
-                    return;
-
-                localStorage.setItem("lang", lang);
-
-                document.querySelectorAll("[data-lang]").forEach(el => {
-                    const key = el.dataset.lang;
-
-                    if (!LANG_DATA[lang][key])
-                        return;
-
-                    let text = LANG_DATA[lang][key];
-
-                    // Tambahkan nama tamu ke greeting
-                    if (key === "greeting" && guestName) {
-                        text += ` ${guestName}`;
-                    }
-
-                    // Jika element punya attribute placeholder
-                    if (el.hasAttribute("placeholder")) {
-                        el.setAttribute("placeholder", text);
-                    } else {
-                        el.textContent = text;
-                    }
-
-                    // ==============================
-                    // FONT SIZE KHUSUS BAHASA JEPANG
-                    // ==============================
-                    if (el.hasAttribute("data-lang-size")) {
-                        el.style.setProperty("color", "#f48fb1", "important");
-                        if (lang === "jp") {
-                            el.style.fontSize = "1.8em"; // kecilkan
-                            el.style.letterSpacing = "0.05em";
-                        } else {
-                            el.style.fontSize = "3em";
-                        }
-                    }
-                });
-
-
-                // Active button
-                document.querySelectorAll(".lang-btn").forEach(btn => {
-                    btn.classList.toggle("active", btn.dataset.lang === lang);
-                });
-            }
-
-            /* =====================================================
-             DOM Ready
-             ===================================================== */
-            document.addEventListener("DOMContentLoaded", () => {
-                const savedLang = localStorage.getItem("lang") || "id";
-                setLang(savedLang);
-            });
-
-            /* =====================================================
-             Helper (example)
-             ⚠ pastikan function ini ADA di project kamu
-             ===================================================== */
-            function formatGuestName(name) {
-                return name
-                        .replace(/\+/g, " ")
-                        .replace(/\b\w/g, c => c.toUpperCase());
-            }
-        </script>
-
-        <script>
-            const nav = document.querySelector(".fh5co-nav");
-
-            window.addEventListener("scroll", () => {
-                if (window.scrollY > 50) {
-                    nav.classList.add("scrolled");
-                } else {
-                    nav.classList.remove("scrolled");
-                }
-            });
-        </script>
-
-    </body>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
 </html>
-
