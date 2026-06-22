@@ -355,6 +355,95 @@ html {
   background: #101820;
 }
 
+.portfolio-page-hero {
+  background:
+    linear-gradient(90deg, rgba(13, 20, 26, .96) 0%, rgba(13, 20, 26, .78) 52%, rgba(13, 20, 26, .58) 100%),
+    url("../img/hero-workspace.png");
+  background-position: center;
+  background-size: cover;
+  color: #fff;
+  padding: 168px 0 96px;
+}
+
+.portfolio-hero-panel,
+.portfolio-link-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 16px 44px rgba(18, 33, 42, .08);
+}
+
+.portfolio-hero-panel {
+  color: var(--ink);
+  display: grid;
+  gap: 8px;
+  padding: 32px;
+}
+
+.portfolio-hero-panel i {
+  color: var(--accent);
+  font-size: 3rem;
+}
+
+.portfolio-hero-panel span {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.portfolio-hero-panel strong {
+  font-size: 1.35rem;
+}
+
+.portfolio-link-card {
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.portfolio-link-card:hover {
+  box-shadow: 0 20px 52px rgba(18, 33, 42, .13);
+  transform: translateY(-5px);
+}
+
+.portfolio-link-card h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 14px 0 10px;
+}
+
+.portfolio-link-card p {
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+.portfolio-link-visual {
+  align-items: center;
+  color: #fff;
+  display: flex;
+  font-size: 3.5rem;
+  height: 220px;
+  justify-content: center;
+}
+
+.visual-kyoritsu {
+  background: linear-gradient(135deg, #12333f, #1fb5a8);
+}
+
+.visual-bbc {
+  background: linear-gradient(135deg, #101820, #f2a541);
+}
+
+.portfolio-footer {
+  background: #101820;
+  color: rgba(255, 255, 255, .7);
+  padding: 26px 0;
+}
+
+.portfolio-footer a {
+  color: var(--accent);
+  font-weight: 800;
+  text-decoration: none;
+}
+
 .text-accent {
   color: var(--accent) !important;
 }
