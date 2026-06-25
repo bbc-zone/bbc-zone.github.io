@@ -444,6 +444,41 @@ html {
   text-decoration: none;
 }
 
+.not-found-page {
+  background: #0d141a;
+  color: #fff;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.not-found-bg {
+  background:
+    linear-gradient(180deg, rgba(13, 20, 26, .62) 0%, #0d141a 100%),
+    linear-gradient(90deg, rgba(13, 20, 26, .96) 0%, rgba(13, 20, 26, .74) 52%, rgba(13, 20, 26, .52) 100%),
+    url("../img/hero-workspace.png");
+  background-position: center;
+  background-size: cover;
+  inset: 0;
+  position: absolute;
+}
+
+.not-found-brand {
+  color: #fff;
+  display: inline-block;
+  font-size: 1.45rem;
+  text-decoration: none;
+}
+
+.not-found-brand:hover,
+.not-found-brand:focus {
+  color: #fff;
+}
+
+.not-found-brand span {
+  color: var(--accent);
+}
+
 .text-accent {
   color: var(--accent) !important;
 }
