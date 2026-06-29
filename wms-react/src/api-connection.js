@@ -1,10 +1,29 @@
-const DEFAULT_API_BASE_URL = 'http://localhost:9000';
-const CONFIG_FILE = `${import.meta.env.BASE_URL}api-config.json`;
+const CONFIG_FILE_NAME = 'api-config.json';
 
 let apiConfigPromise;
 
 function cleanBaseUrl(url) {
-  return String(url || DEFAULT_API_BASE_URL).replace(/\/$/, '');
+  return String(url || '').trim().replace(/\/$/, '');
+}
+
+function uniqueValues(values) {
+  return [...new Set(values.filter(Boolean))];
+}
+
+function getConfigCandidates() {
+  const baseUrl = import.meta.env.BASE_URL || './';
+  const candidates = [new URL(CONFIG_FILE_NAME, window.location.href).href];
+
+  if (baseUrl && baseUrl !== './') {
+    candidates.push(new URL(`${baseUrl.replace(/\/$/, '')}/${CONFIG_FILE_NAME}`, window.location.origin).href);
+  }
+
+  candidates.push(new URL(`./${CONFIG_FILE_NAME}`, window.location.origin + window.location.pathname).href);
+  candidates.push(
+    new URL(`dist/${CONFIG_FILE_NAME}`, window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/')).href
+  );
+
+  return uniqueValues(candidates);
 }
 
 function cleanServerText(text) {
@@ -30,22 +49,33 @@ function notifyApiError(error) {
 
 export async function getApiConfig() {
   if (!apiConfigPromise) {
-    apiConfigPromise = fetch(CONFIG_FILE, { cache: 'no-store' })
-      .then(async (response) => {
-        if (!response.ok) {
-          throw new Error(`API config was not found: ${response.status}`);
+    apiConfigPromise = (async () => {
+      const errors = [];
+
+      for (const configUrl of getConfigCandidates()) {
+        try {
+          const response = await fetch(`${configUrl}?v=${Date.now()}`, { cache: 'no-store' });
+
+          if (!response.ok) {
+            errors.push(`${configUrl}: HTTP ${response.status}`);
+            continue;
+          }
+
+          const config = await response.json();
+          const apiBaseUrl = cleanBaseUrl(config.apiBaseUrl);
+
+          if (!apiBaseUrl) {
+            throw new Error(`${configUrl}: apiBaseUrl is empty`);
+          }
+
+          return { apiBaseUrl };
+        } catch (error) {
+          errors.push(`${configUrl}: ${error.message || 'Failed to read API config'}`);
         }
+      }
 
-        const text = await response.text();
-
-        return JSON.parse(text);
-      })
-      .then((config) => ({
-        apiBaseUrl: cleanBaseUrl(config.apiBaseUrl),
-      }))
-      .catch(() => ({
-        apiBaseUrl: DEFAULT_API_BASE_URL,
-      }));
+      throw new Error(`API config could not be loaded. ${errors.join(' | ')}`);
+    })();
   }
 
   return apiConfigPromise;
@@ -54,7 +84,8 @@ export async function getApiConfig() {
 export async function apiUrl(path = '') {
   const config = await getApiConfig();
   const cleanPath = String(path).replace(/^\//, '');
-  return cleanPath ? `${config.apiBaseUrl}/${cleanPath}` : config.apiBaseUrl;
+
+  return cleanPath ? new URL(cleanPath, `${config.apiBaseUrl}/`).href : config.apiBaseUrl;
 }
 
 export async function apiRequest(path = '', options = {}) {
