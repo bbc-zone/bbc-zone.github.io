@@ -1,0 +1,19 @@
+DirectoryIndex dist/index.html
+
+Options -Indexes
+RewriteEngine On
+
+RewriteRule ^index\.php$ - [L]
+RewriteRule ^db-string\.json$ - [F,L]
+RewriteRule ^log(/.*)?$ - [F,L]
+
+RewriteRule ^$ dist/index.html [L]
+RewriteRule ^react\.ico$ dist/react.ico [L]
+RewriteRule ^api-config\.json$ dist/api-config.json [L]
+RewriteRule ^assets/(.*)$ dist/assets/$1 [L]
+
+RewriteRule ^dist/ - [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ dist/index.html [L]

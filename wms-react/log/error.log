@@ -1,0 +1,19 @@
+
+[2026-06-29 09:54:52] Fatal error
+Method: POST
+URI: /index.php?resource=production-actual
+Message: Call to undefined function random_int()
+File: D:\github\bbc-zone.github.io\wms-react\index.php
+Line: 646
+Type: 1
+--------------------------------------------------------------------------------
+[2026-06-29 09:54:52] API error response
+Method: POST
+URI: /index.php?resource=production-actual
+Status: 500
+Payload: {
+    "success": false,
+    "message": "A fatal server error occurred",
+    "error": "Call to undefined function random_int()"
+}
+--------------------------------------------------------------------------------

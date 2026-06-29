@@ -1,0 +1,6 @@
+{
+  "server": "localhost",
+  "user": "root",
+  "pass": "",
+  "db_name": "wms-react"
+}

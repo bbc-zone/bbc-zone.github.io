@@ -432,6 +432,10 @@ html {
   background: linear-gradient(135deg, #101820, #f2a541);
 }
 
+.visual-wms {
+  background: linear-gradient(135deg, #0f3b57, #1fb5a8);
+}
+
 .portfolio-footer {
   background: #101820;
   color: rgba(255, 255, 255, .7);
