@@ -124,7 +124,19 @@ register_shutdown_function(function () {
     }
 });
 
-header('Access-Control-Allow-Origin: http://localhost:9997');
+$allowedOrigins = array(
+    'http://localhost:9997',
+    'https://bbc-zone.github.io',
+);
+$requestOrigin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+
+if (in_array($requestOrigin, $allowedOrigins, true)) {
+    header('Access-Control-Allow-Origin: ' . $requestOrigin);
+} else {
+    header('Access-Control-Allow-Origin: http://localhost:9997');
+}
+
+header('Vary: Origin');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json; charset=utf-8');
