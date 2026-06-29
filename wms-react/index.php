@@ -129,16 +129,15 @@ $allowedOrigins = array(
     'https://bbc-zone.github.io',
 );
 $requestOrigin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+$responseOrigin = in_array($requestOrigin, $allowedOrigins, true)
+    ? $requestOrigin
+    : 'https://bbc-zone.github.io';
 
-if (in_array($requestOrigin, $allowedOrigins, true)) {
-    header('Access-Control-Allow-Origin: ' . $requestOrigin);
-} else {
-    header('Access-Control-Allow-Origin: http://localhost:9997');
-}
-
+header('Access-Control-Allow-Origin: ' . $responseOrigin, true);
 header('Vary: Origin');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Headers: Accept, Content-Type, X-Requested-With');
+header('Access-Control-Max-Age: 86400');
 header('Content-Type: application/json; charset=utf-8');
 
 $requestMethod = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
