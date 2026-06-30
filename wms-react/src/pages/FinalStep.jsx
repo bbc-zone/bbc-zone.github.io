@@ -395,7 +395,7 @@ export function FinalStep({ onOpenProductionActual }) {
       ) : (
         <DataTable
           columns={finalStepColumns}
-          initialSortDirection="desc"
+          initialSortDirection="asc"
           initialSortKey="plan_date"
           rowKey={(plan) => plan.plan_id}
           rows={filteredPlans}
