@@ -713,6 +713,54 @@ select {
   opacity: 0.7;
 }
 
+.scanner-panel {
+  background: #ffffff;
+  border: 1px solid #d7dee4;
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  grid-column: span 2;
+  padding: 12px;
+}
+
+.scanner-panel video {
+  aspect-ratio: 4 / 3;
+  background: #12222d;
+  border-radius: 8px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.scanner-panel span {
+  color: #647481;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.scanner-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.scanner-actions button {
+  align-items: center;
+  background: #eef8f4;
+  border: 1px solid #bfe8d8;
+  border-radius: 8px;
+  color: #16684f;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 800;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 12px;
+}
+
+.scanner-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .secondary-button {
   background: #ffffff !important;
   border-color: #d7dee4 !important;
@@ -964,6 +1012,10 @@ select {
 
   .readonly-plan {
     grid-template-columns: 1fr;
+  }
+
+  .scanner-panel {
+    grid-column: auto;
   }
 
   .table-filters {

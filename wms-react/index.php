@@ -76,7 +76,7 @@ function ensureDeliveryPlansTable($connection)
           `deliv_id` int(11) NOT NULL AUTO_INCREMENT,
           `item_code` varchar(50) NOT NULL DEFAULT '0',
           `delivery_code` varchar(50) NOT NULL DEFAULT '0',
-          `delivery_date` date NOT NULL DEFAULT (cast(current_timestamp() as date)),
+          `delivery_date` date NOT NULL,
           `customer` varchar(50) NOT NULL DEFAULT '0',
           `delivery_qty` int(11) NOT NULL DEFAULT 0,
           PRIMARY KEY (`deliv_id`),
@@ -95,9 +95,10 @@ function ensureDeliveryPlansTable($connection)
     $columnResult = $connection->query("SHOW COLUMNS FROM `delivery_plans` LIKE 'delivery_date'");
 
     if ($columnResult && $columnResult->num_rows === 0) {
+        $today = date('Y-m-d');
         $alterResult = $connection->query("
             ALTER TABLE `delivery_plans`
-            ADD COLUMN `delivery_date` date NOT NULL DEFAULT (cast(current_timestamp() as date))
+            ADD COLUMN `delivery_date` date NOT NULL DEFAULT '$today'
             AFTER `delivery_code`
         ");
 

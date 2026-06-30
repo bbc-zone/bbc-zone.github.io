@@ -31,6 +31,8 @@ function getStatusBadgeClass(status) {
 
 export function DeliveryActual({ delivId, onBack }) {
   const uniqueCodeInputRef = React.useRef(null);
+  const scannerControlsRef = React.useRef(null);
+  const videoRef = React.useRef(null);
   const [actualRows, setActualRows] = React.useState([]);
   const [actualStatus, setActualStatus] = React.useState('idle');
   const [actualError, setActualError] = React.useState('');
@@ -38,6 +40,8 @@ export function DeliveryActual({ delivId, onBack }) {
   const [actualFormOpen, setActualFormOpen] = React.useState(false);
   const [actualSaving, setActualSaving] = React.useState(false);
   const [inputMode, setInputMode] = React.useState('manual');
+  const [cameraActive, setCameraActive] = React.useState(false);
+  const [cameraStatus, setCameraStatus] = React.useState('');
   const [plan, setPlan] = React.useState(null);
   const [refreshKey, setRefreshKey] = React.useState(0);
   const activePlanId = Number(delivId || plan?.deliv_id || actualForm.plan_id || 0);
@@ -87,6 +91,66 @@ export function DeliveryActual({ delivId, onBack }) {
     }
   }, [actualFormOpen, inputMode]);
 
+  React.useEffect(() => {
+    if (inputMode !== 'scan' || !actualFormOpen) {
+      stopCamera();
+    }
+  }, [actualFormOpen, inputMode]);
+
+  React.useEffect(() => () => stopCamera(), []);
+
+  const stopCamera = React.useCallback(() => {
+    if (scannerControlsRef.current) {
+      scannerControlsRef.current.stop();
+      scannerControlsRef.current = null;
+    }
+
+    setCameraActive(false);
+  }, []);
+
+  const startCamera = React.useCallback(async () => {
+    if (!videoRef.current) {
+      return;
+    }
+
+    stopCamera();
+    setCameraStatus('Opening camera...');
+
+    try {
+      const { BrowserMultiFormatReader } = await import('@zxing/browser');
+      const codeReader = new BrowserMultiFormatReader();
+      const controls = await codeReader.decodeFromConstraints(
+        {
+          video: {
+            facingMode: { ideal: 'environment' },
+          },
+        },
+        videoRef.current,
+        (result) => {
+          const scannedText = result?.getText();
+
+          if (!scannedText) {
+            return;
+          }
+
+          setActualForm((current) => ({
+            ...current,
+            unique_code: scannedText.trim(),
+          }));
+          setCameraStatus('Barcode scanned');
+          stopCamera();
+        }
+      );
+
+      scannerControlsRef.current = controls;
+      setCameraActive(true);
+      setCameraStatus('Camera ready');
+    } catch (error) {
+      setCameraStatus(error.message || 'Failed to open camera');
+      setCameraActive(false);
+    }
+  }, [stopCamera]);
+
   const updateActualFormValue = (event) => {
     const { name, value } = event.target;
     setActualForm((current) => ({
@@ -101,6 +165,7 @@ export function DeliveryActual({ delivId, onBack }) {
       plan_id: activePlanId || null,
     });
     setActualFormOpen(false);
+    stopCamera();
     setActualError('');
   };
 
@@ -117,6 +182,7 @@ export function DeliveryActual({ delivId, onBack }) {
 
   const startEditActual = (actual) => {
     setInputMode('manual');
+    stopCamera();
     setActualForm({
       actual_id: actual.actual_id,
       plan_id: actual.plan_id,
@@ -337,6 +403,20 @@ export function DeliveryActual({ delivId, onBack }) {
                   required
                 />
               </label>
+              {inputMode === 'scan' ? (
+                <div className="scanner-panel">
+                  <video ref={videoRef} muted playsInline />
+                  <div className="scanner-actions">
+                    <button type="button" onClick={startCamera} disabled={cameraActive}>
+                      Open Camera
+                    </button>
+                    <button type="button" className="secondary-button" onClick={stopCamera} disabled={!cameraActive}>
+                      Stop Camera
+                    </button>
+                  </div>
+                  <span>{cameraStatus || 'Camera scanner is ready to start'}</span>
+                </div>
+              ) : null}
               <label>
                 Actual Qty
                 <input
