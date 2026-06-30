@@ -170,6 +170,62 @@ export function deleteFinalStep(planId) {
   });
 }
 
+export function getDeliveryPlanList() {
+  return apiRequest('index.php?resource=delivery-plans');
+}
+
+export function createDeliveryPlan(payload) {
+  return apiRequest('index.php?resource=delivery-plans', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}
+
+export function updateDeliveryPlan(payload) {
+  return apiRequest('index.php?resource=delivery-plans', {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  });
+}
+
+export function deleteDeliveryPlan(delivId) {
+  return apiRequest(`index.php?resource=delivery-plans&deliv_id=${encodeURIComponent(delivId)}`, {
+    method: 'DELETE',
+  });
+}
+
+export function getDeliveryActual(delivId) {
+  if (!delivId || Number(delivId) <= 0) {
+    return Promise.reject(new Error('Delivery ID is required'));
+  }
+
+  return apiRequest(`index.php?resource=delivery-actual&deliv_id=${encodeURIComponent(delivId)}`);
+}
+
+export function createDeliveryActual(payload) {
+  if (!payload?.plan_id || Number(payload.plan_id) <= 0) {
+    return Promise.reject(new Error('Delivery ID is required'));
+  }
+
+  return apiRequest('index.php?resource=delivery-actual', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}
+
+export function updateDeliveryActual(payload) {
+  return apiRequest('index.php?resource=delivery-actual', {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  });
+}
+
+export function deleteDeliveryActual(actualId) {
+  return apiRequest(`index.php?resource=delivery-actual&actual_id=${encodeURIComponent(actualId)}`, {
+    method: 'DELETE',
+  });
+}
+
 export function getProductionActual(planId) {
   if (!planId || Number(planId) <= 0) {
     return Promise.reject(new Error('Plan ID is required'));

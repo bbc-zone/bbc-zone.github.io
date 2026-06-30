@@ -18,6 +18,17 @@ const emptyPlanForm = {
 
 const finalStepFilterStorageKey = 'wms-final-step-filters';
 
+function getDateStringWithOffset(dayOffset) {
+  const date = new Date();
+  date.setDate(date.getDate() + dayOffset);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
 function getStatusBadgeClass(status) {
   if (status === 'Complete') {
     return 'table-badge ok';
@@ -42,6 +53,8 @@ function getStoredFinalStepFilters() {
 
 export function FinalStep({ onOpenProductionActual }) {
   const storedFilters = React.useMemo(() => getStoredFinalStepFilters(), []);
+  const defaultStartDate = React.useMemo(() => getDateStringWithOffset(-7), []);
+  const defaultEndDate = React.useMemo(() => getDateStringWithOffset(7), []);
   const [plans, setPlans] = React.useState([]);
   const [items, setItems] = React.useState([]);
   const [planStatus, setPlanStatus] = React.useState('idle');
@@ -50,10 +63,10 @@ export function FinalStep({ onOpenProductionActual }) {
   const [planForm, setPlanForm] = React.useState(emptyPlanForm);
   const [planFormOpen, setPlanFormOpen] = React.useState(false);
   const [planSaving, setPlanSaving] = React.useState(false);
-  const [filterStartDate, setFilterStartDate] = React.useState(storedFilters.filterStartDate || '');
-  const [filterEndDate, setFilterEndDate] = React.useState(storedFilters.filterEndDate || '');
+  const [filterStartDate, setFilterStartDate] = React.useState(storedFilters.filterStartDate || defaultStartDate);
+  const [filterEndDate, setFilterEndDate] = React.useState(storedFilters.filterEndDate || defaultEndDate);
   const [filterItemCode, setFilterItemCode] = React.useState(storedFilters.filterItemCode || '');
-  const [filterStatus, setFilterStatus] = React.useState(storedFilters.filterStatus || '');
+  const [filterStatus, setFilterStatus] = React.useState(storedFilters.filterStatus || 'open-partial');
   const [itemCodeSearch, setItemCodeSearch] = React.useState('');
   const [itemCodeFilterOpen, setItemCodeFilterOpen] = React.useState(false);
 
@@ -181,10 +194,10 @@ export function FinalStep({ onOpenProductionActual }) {
   });
 
   const clearFilters = () => {
-    setFilterStartDate('');
-    setFilterEndDate('');
+    setFilterStartDate(defaultStartDate);
+    setFilterEndDate(defaultEndDate);
     setFilterItemCode('');
-    setFilterStatus('');
+    setFilterStatus('open-partial');
     setItemCodeSearch('');
     setItemCodeFilterOpen(false);
     window.sessionStorage.removeItem(finalStepFilterStorageKey);

@@ -54,7 +54,15 @@ export function Sidebar({ activePage, onNavigate, onClose }) {
             <PackagePlus size={18} />
             Final Step
           </a>
-          <a className="nav-link nav-child" href="#" onClick={onClose}>
+          <a
+            className={
+              activePage === 'delivery' || activePage === 'delivery-actual'
+                ? 'nav-link nav-child active'
+                : 'nav-link nav-child'
+            }
+            href="#"
+            onClick={(event) => onNavigate(event, 'delivery')}
+          >
             <Truck size={18} />
             Delivery
           </a>

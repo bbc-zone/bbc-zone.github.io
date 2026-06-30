@@ -69,6 +69,114 @@ function getProductionPlanStatus($planQty, $actualQty)
     return 'Complete';
 }
 
+function ensureDeliveryPlansTable($connection)
+{
+    $result = $connection->query("
+        CREATE TABLE IF NOT EXISTS `delivery_plans` (
+          `deliv_id` int(11) NOT NULL AUTO_INCREMENT,
+          `item_code` varchar(50) NOT NULL DEFAULT '0',
+          `delivery_code` varchar(50) NOT NULL DEFAULT '0',
+          `delivery_date` date NOT NULL DEFAULT (cast(current_timestamp() as date)),
+          `customer` varchar(50) NOT NULL DEFAULT '0',
+          `delivery_qty` int(11) NOT NULL DEFAULT 0,
+          PRIMARY KEY (`deliv_id`),
+          UNIQUE KEY `item_code_delivery_code` (`delivery_code`,`item_code`,`delivery_date`) USING BTREE
+        ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+    ");
+
+    if (!$result) {
+        sendJsonResponse([
+            'success' => false,
+            'message' => 'Failed to create delivery plan table',
+            'error' => $connection->error,
+        ], 500);
+    }
+
+    $columnResult = $connection->query("SHOW COLUMNS FROM `delivery_plans` LIKE 'delivery_date'");
+
+    if ($columnResult && $columnResult->num_rows === 0) {
+        $alterResult = $connection->query("
+            ALTER TABLE `delivery_plans`
+            ADD COLUMN `delivery_date` date NOT NULL DEFAULT (cast(current_timestamp() as date))
+            AFTER `delivery_code`
+        ");
+
+        if (!$alterResult) {
+            sendJsonResponse([
+                'success' => false,
+                'message' => 'Failed to add delivery date column',
+                'error' => $connection->error,
+            ], 500);
+        }
+    }
+
+    $indexResult = $connection->query("SHOW INDEX FROM `delivery_plans` WHERE Key_name = 'item_code_delivery_code' ORDER BY Seq_in_index ASC");
+    $indexColumns = array();
+
+    if ($indexResult) {
+        while ($indexRow = $indexResult->fetch_assoc()) {
+            $indexColumns[] = $indexRow['Column_name'];
+        }
+    }
+
+    $expectedIndexColumns = array('delivery_code', 'item_code', 'delivery_date');
+    $shouldRecreateIndex = $indexColumns !== $expectedIndexColumns;
+
+    if ($indexResult && $indexResult->num_rows > 0 && $shouldRecreateIndex) {
+        $dropIndexResult = $connection->query("ALTER TABLE `delivery_plans` DROP INDEX `item_code_delivery_code`");
+
+        if (!$dropIndexResult) {
+            sendJsonResponse([
+                'success' => false,
+                'message' => 'Failed to update delivery plan unique index',
+                'error' => $connection->error,
+            ], 500);
+        }
+    }
+
+    if ($shouldRecreateIndex) {
+        $addIndexResult = $connection->query("
+            ALTER TABLE `delivery_plans`
+            ADD UNIQUE KEY `item_code_delivery_code` (`delivery_code`,`item_code`,`delivery_date`) USING BTREE
+        ");
+
+        if (!$addIndexResult && (int) $connection->errno !== 1061) {
+            sendJsonResponse([
+                'success' => false,
+                'message' => 'Failed to create delivery plan unique index',
+                'error' => $connection->error,
+            ], 500);
+        }
+    }
+}
+
+function ensureDeliveryActualsTable($connection)
+{
+    ensureDeliveryPlansTable($connection);
+
+    $result = $connection->query("
+        CREATE TABLE IF NOT EXISTS `delivery_actuals` (
+          `actual_id` int(10) NOT NULL AUTO_INCREMENT,
+          `unique_code` varchar(80) NOT NULL,
+          `plan_id` int(10) NOT NULL,
+          `actual_date` datetime NOT NULL,
+          `actual_qty` int(11) NOT NULL,
+          `remarks` varchar(255) DEFAULT NULL,
+          PRIMARY KEY (`actual_id`),
+          KEY `plan_id_delivery_id` (`plan_id`),
+          CONSTRAINT `plan_id_delivery_id` FOREIGN KEY (`plan_id`) REFERENCES `delivery_plans` (`deliv_id`) ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC
+    ");
+
+    if (!$result) {
+        sendJsonResponse([
+            'success' => false,
+            'message' => 'Failed to create delivery actual table',
+            'error' => $connection->error,
+        ], 500);
+    }
+}
+
 set_error_handler(function ($severity, $message, $file, $line) {
     if (!(error_reporting() & $severity)) {
         return false;
@@ -659,6 +767,595 @@ if ($resource === 'final-step') {
         'success' => true,
         'message' => 'Production plan was read successfully',
         'data' => $plans,
+    ]);
+    exit;
+}
+
+if ($resource === 'delivery-plans') {
+    ensureDeliveryPlansTable($connection);
+    ensureDeliveryActualsTable($connection);
+
+    $input = json_decode(file_get_contents('php://input'), true);
+
+    if (!is_array($input)) {
+        $input = array();
+    }
+
+    if ($requestMethod === 'POST') {
+        $itemCode = isset($input['item_code']) ? trim($input['item_code']) : '';
+        $deliveryCode = isset($input['delivery_code']) ? trim($input['delivery_code']) : '';
+        $deliveryDate = isset($input['delivery_date']) && trim($input['delivery_date']) !== '' ? trim($input['delivery_date']) : date('Y-m-d');
+        $customer = isset($input['customer']) ? trim($input['customer']) : '';
+        $deliveryQty = isset($input['delivery_qty']) ? (int) $input['delivery_qty'] : 0;
+
+        if ($itemCode === '' || $deliveryCode === '' || $deliveryDate === '' || $customer === '' || $deliveryQty <= 0) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Item code, delivery no, delivery date, customer, and delivery qty are required',
+            ]);
+            exit;
+        }
+
+        $statement = $connection->prepare("
+            INSERT INTO delivery_plans (item_code, delivery_code, delivery_date, customer, delivery_qty)
+            VALUES (?, ?, ?, ?, ?)
+        ");
+
+        if (!$statement) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to prepare delivery plan creation',
+                'error' => $connection->error,
+            ]);
+            exit;
+        }
+
+        $statement->bind_param('ssssi', $itemCode, $deliveryCode, $deliveryDate, $customer, $deliveryQty);
+
+        if (!$statement->execute()) {
+            $statusCode = $connection->errno === 1062 || $statement->errno === 1062 ? 409 : 500;
+
+            http_response_code($statusCode);
+            echo json_encode([
+                'success' => false,
+                'message' => $statusCode === 409
+                    ? 'Delivery no, item code, and delivery date already exist'
+                    : 'Failed to create delivery plan',
+                'error' => $statement->error,
+            ]);
+            exit;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Delivery plan was created successfully',
+            'deliv_id' => $statement->insert_id,
+        ]);
+        exit;
+    }
+
+    if ($requestMethod === 'PUT') {
+        $delivId = isset($input['deliv_id']) ? (int) $input['deliv_id'] : 0;
+        $itemCode = isset($input['item_code']) ? trim($input['item_code']) : '';
+        $deliveryCode = isset($input['delivery_code']) ? trim($input['delivery_code']) : '';
+        $deliveryDate = isset($input['delivery_date']) && trim($input['delivery_date']) !== '' ? trim($input['delivery_date']) : date('Y-m-d');
+        $customer = isset($input['customer']) ? trim($input['customer']) : '';
+        $deliveryQty = isset($input['delivery_qty']) ? (int) $input['delivery_qty'] : 0;
+
+        if ($delivId <= 0 || $itemCode === '' || $deliveryCode === '' || $deliveryDate === '' || $customer === '' || $deliveryQty <= 0) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Delivery ID, item code, delivery no, delivery date, customer, and delivery qty are required',
+            ]);
+            exit;
+        }
+
+        $statement = $connection->prepare("
+            UPDATE delivery_plans
+            SET item_code = ?, delivery_code = ?, delivery_date = ?, customer = ?, delivery_qty = ?
+            WHERE deliv_id = ?
+        ");
+
+        if (!$statement) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to prepare delivery plan update',
+                'error' => $connection->error,
+            ]);
+            exit;
+        }
+
+        $statement->bind_param('ssssii', $itemCode, $deliveryCode, $deliveryDate, $customer, $deliveryQty, $delivId);
+
+        if (!$statement->execute()) {
+            $statusCode = $connection->errno === 1062 || $statement->errno === 1062 ? 409 : 500;
+
+            http_response_code($statusCode);
+            echo json_encode([
+                'success' => false,
+                'message' => $statusCode === 409
+                    ? 'Delivery no, item code, and delivery date already exist'
+                    : 'Failed to update delivery plan',
+                'error' => $statement->error,
+            ]);
+            exit;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Delivery plan was updated successfully',
+        ]);
+        exit;
+    }
+
+    if ($requestMethod === 'DELETE') {
+        $delivId = isset($_GET['deliv_id']) ? (int) $_GET['deliv_id'] : 0;
+
+        if ($delivId <= 0) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Delivery ID is required',
+            ]);
+            exit;
+        }
+
+        $statement = $connection->prepare("DELETE FROM delivery_plans WHERE deliv_id = ?");
+
+        if (!$statement) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to prepare delivery plan deletion',
+                'error' => $connection->error,
+            ]);
+            exit;
+        }
+
+        $statement->bind_param('i', $delivId);
+
+        if (!$statement->execute()) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to delete delivery plan',
+                'error' => $statement->error,
+            ]);
+            exit;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Delivery plan was deleted successfully',
+        ]);
+        exit;
+    }
+
+    $result = $connection->query("
+        SELECT
+            dp.deliv_id,
+            dp.item_code,
+            COALESCE(im.item_name, '-') AS item_name,
+            dp.delivery_code,
+            dp.delivery_date,
+            dp.customer,
+            dp.delivery_qty,
+            COALESCE(da.actual_qty_total, 0) AS actual_qty_total
+        FROM delivery_plans dp
+        LEFT JOIN item_master im ON im.item_code = dp.item_code
+        LEFT JOIN (
+            SELECT plan_id, SUM(actual_qty) AS actual_qty_total
+            FROM delivery_actuals
+            GROUP BY plan_id
+        ) da ON da.plan_id = dp.deliv_id
+        ORDER BY dp.deliv_id DESC
+    ");
+
+    if (!$result) {
+        http_response_code(500);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Failed to read delivery plan',
+            'error' => $connection->error,
+        ]);
+        exit;
+    }
+
+    $deliveryPlans = array();
+
+    while ($row = $result->fetch_assoc()) {
+        $deliveryPlans[] = array(
+            'deliv_id' => (int) $row['deliv_id'],
+            'item_code' => $row['item_code'],
+            'item_name' => $row['item_name'],
+            'delivery_code' => $row['delivery_code'],
+            'delivery_date' => $row['delivery_date'],
+            'customer' => $row['customer'],
+            'delivery_qty' => (int) $row['delivery_qty'],
+            'actual_qty_total' => (int) $row['actual_qty_total'],
+            'status' => getProductionPlanStatus($row['delivery_qty'], $row['actual_qty_total']),
+        );
+    }
+
+    echo json_encode([
+        'success' => true,
+        'message' => 'Delivery plan was read successfully',
+        'data' => $deliveryPlans,
+    ]);
+    exit;
+}
+
+if ($resource === 'delivery-actual') {
+    ensureDeliveryActualsTable($connection);
+
+    $input = json_decode(file_get_contents('php://input'), true);
+
+    if (!is_array($input)) {
+        $input = array();
+    }
+
+    if ($requestMethod === 'POST') {
+        $planId = isset($input['plan_id']) ? (int) $input['plan_id'] : 0;
+        $uniqueCode = isset($input['unique_code']) ? trim($input['unique_code']) : '';
+        $actualQty = isset($input['actual_qty']) ? (int) $input['actual_qty'] : 0;
+        $remarks = isset($input['remarks']) && trim($input['remarks']) !== '' ? trim($input['remarks']) : null;
+
+        if ($planId <= 0 || $uniqueCode === '' || $actualQty <= 0) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Delivery ID, unique code, and actual qty are required',
+            ]);
+            exit;
+        }
+
+        $planStatement = $connection->prepare("
+            SELECT
+                dp.deliv_id,
+                dp.delivery_qty,
+                COALESCE(da.actual_qty_total, 0) AS actual_qty_total
+            FROM delivery_plans dp
+            LEFT JOIN (
+                SELECT plan_id, SUM(actual_qty) AS actual_qty_total
+                FROM delivery_actuals
+                GROUP BY plan_id
+            ) da ON da.plan_id = dp.deliv_id
+            WHERE dp.deliv_id = ?
+        ");
+
+        if (!$planStatement) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to check delivery plan',
+                'error' => $connection->error,
+            ]);
+            exit;
+        }
+
+        $planStatement->bind_param('i', $planId);
+        $planStatement->execute();
+        $planResult = $planStatement->get_result();
+        $planRow = $planResult->fetch_assoc();
+
+        if (!$planRow) {
+            http_response_code(404);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Delivery plan was not found',
+            ]);
+            exit;
+        }
+
+        $remainingQty = max((int) $planRow['delivery_qty'] - (int) $planRow['actual_qty_total'], 0);
+
+        if ($actualQty > $remainingQty) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Actual qty must be within the remaining delivery qty',
+                'remaining_qty' => $remainingQty,
+            ]);
+            exit;
+        }
+
+        $actualDateTime = date('Y-m-d H:i:s');
+        $statement = $connection->prepare("
+            INSERT INTO delivery_actuals (unique_code, plan_id, actual_date, actual_qty, remarks)
+            VALUES (?, ?, ?, ?, ?)
+        ");
+
+        if (!$statement) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to prepare delivery actual creation',
+                'error' => $connection->error,
+            ]);
+            exit;
+        }
+
+        $statement->bind_param('sisis', $uniqueCode, $planId, $actualDateTime, $actualQty, $remarks);
+
+        if (!$statement->execute()) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to create delivery actual',
+                'error' => $statement->error,
+            ]);
+            exit;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Delivery actual was created successfully',
+            'actual_id' => $statement->insert_id,
+        ]);
+        exit;
+    }
+
+    if ($requestMethod === 'PUT') {
+        $actualId = isset($input['actual_id']) ? (int) $input['actual_id'] : 0;
+        $uniqueCode = isset($input['unique_code']) ? trim($input['unique_code']) : '';
+        $actualQty = isset($input['actual_qty']) ? (int) $input['actual_qty'] : 0;
+        $remarks = isset($input['remarks']) && trim($input['remarks']) !== '' ? trim($input['remarks']) : null;
+
+        if ($actualId <= 0 || $uniqueCode === '' || $actualQty < 0) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Actual ID, unique code, and actual qty are required',
+            ]);
+            exit;
+        }
+
+        $actualPlanStatement = $connection->prepare("
+            SELECT
+                da.actual_id,
+                da.actual_qty AS current_actual_qty,
+                dp.delivery_qty,
+                COALESCE(total_actual.actual_qty_total, 0) AS actual_qty_total
+            FROM delivery_actuals da
+            INNER JOIN delivery_plans dp ON dp.deliv_id = da.plan_id
+            LEFT JOIN (
+                SELECT plan_id, SUM(actual_qty) AS actual_qty_total
+                FROM delivery_actuals
+                GROUP BY plan_id
+            ) total_actual ON total_actual.plan_id = da.plan_id
+            WHERE da.actual_id = ?
+        ");
+
+        if (!$actualPlanStatement) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to check delivery actual qty limit',
+                'error' => $connection->error,
+            ]);
+            exit;
+        }
+
+        $actualPlanStatement->bind_param('i', $actualId);
+        $actualPlanStatement->execute();
+        $actualPlanResult = $actualPlanStatement->get_result();
+        $actualPlanRow = $actualPlanResult->fetch_assoc();
+
+        if (!$actualPlanRow) {
+            http_response_code(404);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Delivery actual was not found',
+            ]);
+            exit;
+        }
+
+        $editableRemainingQty = max(
+            (int) $actualPlanRow['delivery_qty'] - ((int) $actualPlanRow['actual_qty_total'] - (int) $actualPlanRow['current_actual_qty']),
+            0
+        );
+
+        if ($actualQty > $editableRemainingQty) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Actual qty must be within the remaining delivery qty',
+                'remaining_qty' => $editableRemainingQty,
+            ]);
+            exit;
+        }
+
+        $statement = $connection->prepare("
+            UPDATE delivery_actuals
+            SET unique_code = ?, actual_qty = ?, remarks = ?
+            WHERE actual_id = ?
+        ");
+
+        if (!$statement) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to prepare delivery actual update',
+                'error' => $connection->error,
+            ]);
+            exit;
+        }
+
+        $statement->bind_param('sisi', $uniqueCode, $actualQty, $remarks, $actualId);
+
+        if (!$statement->execute()) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to update delivery actual',
+                'error' => $statement->error,
+            ]);
+            exit;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Delivery actual was updated successfully',
+        ]);
+        exit;
+    }
+
+    if ($requestMethod === 'DELETE') {
+        $actualId = isset($_GET['actual_id']) ? (int) $_GET['actual_id'] : 0;
+
+        if ($actualId <= 0) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Actual ID is required',
+            ]);
+            exit;
+        }
+
+        $statement = $connection->prepare("DELETE FROM delivery_actuals WHERE actual_id = ?");
+
+        if (!$statement) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to prepare delivery actual deletion',
+                'error' => $connection->error,
+            ]);
+            exit;
+        }
+
+        $statement->bind_param('i', $actualId);
+
+        if (!$statement->execute()) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to delete delivery actual',
+                'error' => $statement->error,
+            ]);
+            exit;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Delivery actual was deleted successfully',
+        ]);
+        exit;
+    }
+
+    $planId = isset($_GET['deliv_id']) ? (int) $_GET['deliv_id'] : 0;
+
+    if ($planId <= 0) {
+        http_response_code(422);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Delivery ID is required',
+        ]);
+        exit;
+    }
+
+    $planStatement = $connection->prepare("
+        SELECT
+            dp.deliv_id,
+            dp.item_code,
+            COALESCE(im.item_name, '-') AS item_name,
+            dp.delivery_code,
+            dp.delivery_date,
+            dp.customer,
+            dp.delivery_qty,
+            COALESCE(da.actual_qty_total, 0) AS actual_qty_total
+        FROM delivery_plans dp
+        LEFT JOIN item_master im ON im.item_code = dp.item_code
+        LEFT JOIN (
+            SELECT plan_id, SUM(actual_qty) AS actual_qty_total
+            FROM delivery_actuals
+            GROUP BY plan_id
+        ) da ON da.plan_id = dp.deliv_id
+        WHERE dp.deliv_id = ?
+    ");
+
+    if (!$planStatement) {
+        http_response_code(500);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Failed to prepare delivery plan read',
+            'error' => $connection->error,
+        ]);
+        exit;
+    }
+
+    $planStatement->bind_param('i', $planId);
+    $planStatement->execute();
+    $planResult = $planStatement->get_result();
+    $planRow = $planResult->fetch_assoc();
+
+    if (!$planRow) {
+        http_response_code(404);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Delivery plan was not found',
+        ]);
+        exit;
+    }
+
+    $actualStatement = $connection->prepare("
+        SELECT
+            actual_id,
+            unique_code,
+            plan_id,
+            actual_date,
+            actual_qty,
+            remarks
+        FROM delivery_actuals
+        WHERE plan_id = ?
+        ORDER BY actual_date DESC, actual_id DESC
+    ");
+
+    if (!$actualStatement) {
+        http_response_code(500);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Failed to prepare delivery actual read',
+            'error' => $connection->error,
+        ]);
+        exit;
+    }
+
+    $actualStatement->bind_param('i', $planId);
+    $actualStatement->execute();
+    $actualResult = $actualStatement->get_result();
+    $actualRows = array();
+
+    while ($row = $actualResult->fetch_assoc()) {
+        $actualRows[] = array(
+            'actual_id' => (int) $row['actual_id'],
+            'unique_code' => $row['unique_code'],
+            'plan_id' => (int) $row['plan_id'],
+            'actual_date' => $row['actual_date'],
+            'actual_qty' => (int) $row['actual_qty'],
+            'remarks' => $row['remarks'],
+        );
+    }
+
+    echo json_encode([
+        'success' => true,
+        'message' => 'Delivery actual was read successfully',
+        'plan' => array(
+            'deliv_id' => (int) $planRow['deliv_id'],
+            'item_code' => $planRow['item_code'],
+            'item_name' => $planRow['item_name'],
+            'delivery_code' => $planRow['delivery_code'],
+            'delivery_date' => $planRow['delivery_date'],
+            'customer' => $planRow['customer'],
+            'delivery_qty' => (int) $planRow['delivery_qty'],
+            'actual_qty_total' => (int) $planRow['actual_qty_total'],
+            'status' => getProductionPlanStatus($planRow['delivery_qty'], $planRow['actual_qty_total']),
+        ),
+        'data' => $actualRows,
     ]);
     exit;
 }

@@ -5,6 +5,8 @@ import { getApiConnectionStatus } from './api-connection';
 import { Footer } from './components/Footer';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './pages/Dashboard';
+import { Delivery } from './pages/Delivery';
+import { DeliveryActual } from './pages/DeliveryActual';
 import { FinalStep } from './pages/FinalStep';
 import { ItemMaster } from './pages/ItemMaster';
 import { ProductionActual } from './pages/ProductionActual';
@@ -13,6 +15,8 @@ import './styles.css';
 const pageTitles = {
   dashboard: 'Dashboard WMS',
   'final-step': 'Final Step',
+  delivery: 'Delivery',
+  'delivery-actual': 'Delivery Actual',
   'item-master': 'Item Master',
   'production-actual': 'Production Actual',
 };
@@ -25,9 +29,14 @@ function App() {
   const [activePage, setActivePage] = React.useState(() => {
     const storedPage = window.sessionStorage.getItem('wms-active-page');
     const storedPlanId = window.sessionStorage.getItem('wms-selected-plan-id');
+    const storedDeliveryId = window.sessionStorage.getItem('wms-selected-delivery-id');
 
     if (storedPage === 'production-actual' && !storedPlanId) {
       return 'final-step';
+    }
+
+    if (storedPage === 'delivery-actual' && !storedDeliveryId) {
+      return 'delivery';
     }
 
     return storedPage || 'dashboard';
@@ -37,6 +46,11 @@ function App() {
     const storedPlanId = window.sessionStorage.getItem('wms-selected-plan-id');
 
     return storedPlanId ? Number(storedPlanId) : null;
+  });
+  const [selectedDeliveryId, setSelectedDeliveryId] = React.useState(() => {
+    const storedDeliveryId = window.sessionStorage.getItem('wms-selected-delivery-id');
+
+    return storedDeliveryId ? Number(storedDeliveryId) : null;
   });
   const initialConnectionCheckRef = React.useRef(false);
 
@@ -97,6 +111,11 @@ function App() {
       setSelectedPlanId(null);
     }
 
+    if (page !== 'delivery-actual') {
+      window.sessionStorage.removeItem('wms-selected-delivery-id');
+      setSelectedDeliveryId(null);
+    }
+
     setActivePage(page);
     setMenuOpen(false);
   };
@@ -110,6 +129,15 @@ function App() {
     setMenuOpen(false);
   };
 
+  const openDeliveryActual = (delivId) => {
+    const nextDeliveryId = Number(delivId);
+
+    window.sessionStorage.setItem('wms-selected-delivery-id', String(nextDeliveryId));
+    setSelectedDeliveryId(nextDeliveryId);
+    setActivePage('delivery-actual');
+    setMenuOpen(false);
+  };
+
   const pageTitle = pageTitles[activePage] || 'Dashboard WMS';
   const renderPage = () => {
     if (activePage === 'final-step') {
@@ -118,6 +146,23 @@ function App() {
 
     if (activePage === 'item-master') {
       return <ItemMaster />;
+    }
+
+    if (activePage === 'delivery') {
+      return <Delivery onOpenDeliveryActual={openDeliveryActual} />;
+    }
+
+    if (activePage === 'delivery-actual') {
+      return (
+        <DeliveryActual
+          delivId={selectedDeliveryId}
+          onBack={() => {
+            window.sessionStorage.removeItem('wms-selected-delivery-id');
+            setSelectedDeliveryId(null);
+            setActivePage('delivery');
+          }}
+        />
+      );
     }
 
     if (activePage === 'production-actual') {
