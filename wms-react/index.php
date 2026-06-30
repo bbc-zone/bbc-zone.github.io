@@ -146,7 +146,7 @@ $resource = isset($_GET['resource']) ? $_GET['resource'] : '';
 if ($requestMethod === 'OPTIONS') {
     exit;
 }
-var_dump($resource);exit;
+
 if ($resource === '') {
     $acceptHeader = isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : '';
 
