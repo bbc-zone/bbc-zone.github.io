@@ -53,6 +53,7 @@ export function FinalStep({ onOpenProductionActual }) {
   const [filterStartDate, setFilterStartDate] = React.useState(storedFilters.filterStartDate || '');
   const [filterEndDate, setFilterEndDate] = React.useState(storedFilters.filterEndDate || '');
   const [filterItemCode, setFilterItemCode] = React.useState(storedFilters.filterItemCode || '');
+  const [filterStatus, setFilterStatus] = React.useState(storedFilters.filterStatus || '');
   const [itemCodeSearch, setItemCodeSearch] = React.useState('');
   const [itemCodeFilterOpen, setItemCodeFilterOpen] = React.useState(false);
 
@@ -80,9 +81,10 @@ export function FinalStep({ onOpenProductionActual }) {
         filterStartDate,
         filterEndDate,
         filterItemCode,
+        filterStatus,
       })
     );
-  }, [filterStartDate, filterEndDate, filterItemCode]);
+  }, [filterStartDate, filterEndDate, filterItemCode, filterStatus]);
 
   const resetPlanForm = () => {
     setPlanForm(emptyPlanForm);
@@ -168,14 +170,21 @@ export function FinalStep({ onOpenProductionActual }) {
     const matchItemCode = !filterItemCode || plan.item_code === filterItemCode;
     const matchStartDate = !filterStartDate || (plan.plan_date && plan.plan_date >= filterStartDate);
     const matchEndDate = !filterEndDate || (plan.plan_date && plan.plan_date <= filterEndDate);
+    const planStatusValue = plan.status || 'Open';
+    const matchStatus =
+      !filterStatus ||
+      (filterStatus === 'open-partial'
+        ? ['Open', 'Partial'].includes(planStatusValue)
+        : planStatusValue === filterStatus);
 
-    return matchItemCode && matchStartDate && matchEndDate;
+    return matchItemCode && matchStartDate && matchEndDate && matchStatus;
   });
 
   const clearFilters = () => {
     setFilterStartDate('');
     setFilterEndDate('');
     setFilterItemCode('');
+    setFilterStatus('');
     setItemCodeSearch('');
     setItemCodeFilterOpen(false);
     window.sessionStorage.removeItem(finalStepFilterStorageKey);
@@ -362,6 +371,17 @@ export function FinalStep({ onOpenProductionActual }) {
             </div>
           ) : null}
         </div>
+
+        <label>
+          Status
+          <select value={filterStatus} onChange={(event) => setFilterStatus(event.target.value)}>
+            <option value="">All statuses</option>
+            <option value="open-partial">Open &amp; Partial</option>
+            <option value="Open">Open</option>
+            <option value="Partial">Partial</option>
+            <option value="Complete">Complete</option>
+          </select>
+        </label>
 
         <button className="filter-clear-button" type="button" onClick={clearFilters}>
           Clear
