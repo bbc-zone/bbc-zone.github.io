@@ -148,6 +148,13 @@ if ($requestMethod === 'OPTIONS') {
 }
 
 if ($resource === '') {
+    $acceptHeader = isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : '';
+
+    if ($requestMethod === 'GET' && stripos($acceptHeader, 'text/html') !== false) {
+        header('Location: dist/', true, 302);
+        exit;
+    }
+
     http_response_code(404);
     echo json_encode([
         'success' => false,
