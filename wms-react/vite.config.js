@@ -23,6 +23,8 @@ export default defineConfig({
     emptyOutDir: false,
   },
   server: {
+    allowedHosts: true,
+    host: '0.0.0.0',
     port: 9997,
   },
 });

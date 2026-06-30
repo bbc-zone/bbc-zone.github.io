@@ -144,7 +144,23 @@ export function ProductionActual({ onBack, planId }) {
 
     action
       .then(() => {
-        resetActualForm();
+        const nextRemainingQty = actualForm.actual_id
+          ? 0
+          : Math.max(remainingQty - Number(actualForm.actual_qty || 0), 0);
+
+        if (nextRemainingQty > 0) {
+          setActualForm({
+            ...emptyActualForm,
+            plan_id: activePlanId || null,
+            unique_code: '',
+            actual_qty: 1,
+          });
+          setActualFormOpen(true);
+          setActualError('');
+        } else {
+          resetActualForm();
+        }
+
         setRefreshKey((value) => value + 1);
       })
       .catch((error) => {

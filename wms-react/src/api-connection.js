@@ -11,19 +11,13 @@ function uniqueValues(values) {
 }
 
 function getConfigCandidates() {
-  const baseUrl = import.meta.env.BASE_URL || './';
-  const candidates = [new URL(CONFIG_FILE_NAME, window.location.href).href];
+  const currentConfig = new URL(CONFIG_FILE_NAME, window.location.href).href;
 
-  if (baseUrl && baseUrl !== './') {
-    candidates.push(new URL(`${baseUrl.replace(/\/$/, '')}/${CONFIG_FILE_NAME}`, window.location.origin).href);
+  if (import.meta.env.DEV) {
+    return uniqueValues([new URL(CONFIG_FILE_NAME, window.location.origin).href, currentConfig]);
   }
 
-  candidates.push(new URL(`./${CONFIG_FILE_NAME}`, window.location.origin + window.location.pathname).href);
-  candidates.push(
-    new URL(`dist/${CONFIG_FILE_NAME}`, window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/')).href
-  );
-
-  return uniqueValues(candidates);
+  return [currentConfig];
 }
 
 function cleanServerText(text) {
