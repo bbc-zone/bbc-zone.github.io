@@ -935,6 +935,88 @@ if ($resource === 'production-actual') {
             exit;
         }
 
+        $actualStatement = $connection->prepare("
+            SELECT actual_id, unique_code, actual_qty
+            FROM production_actuals
+            WHERE actual_id = ?
+        ");
+
+        if (!$actualStatement) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to prepare production actual check',
+                'error' => $connection->error,
+            ]);
+            exit;
+        }
+
+        $actualStatement->bind_param('i', $actualId);
+        $actualStatement->execute();
+        $actualResult = $actualStatement->get_result();
+        $actualRow = $actualResult->fetch_assoc();
+
+        if (!$actualRow) {
+            http_response_code(404);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Production actual was not found',
+            ]);
+            exit;
+        }
+
+        $stockMovementTable = null;
+        $stockMovementResult = $connection->query("SHOW TABLES LIKE 'stock_movement'");
+
+        if ($stockMovementResult && $stockMovementResult->num_rows > 0) {
+            $stockMovementTable = 'stock_movement';
+        } else {
+            $stockMovementResult = $connection->query("SHOW TABLES LIKE 'stock_movements'");
+
+            if ($stockMovementResult && $stockMovementResult->num_rows > 0) {
+                $stockMovementTable = 'stock_movements';
+            }
+        }
+
+        if ($stockMovementTable) {
+            $stockStatement = $connection->prepare("
+                SELECT COALESCE(SUM(qty_in - qty_out), 0) AS available_qty
+                FROM `$stockMovementTable`
+                WHERE barcode = ?
+            ");
+
+            if (!$stockStatement) {
+                http_response_code(500);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Failed to prepare stock movement check',
+                    'error' => $connection->error,
+                ]);
+                exit;
+            }
+
+            $stockStatement->bind_param('s', $actualRow['unique_code']);
+            $stockStatement->execute();
+            $stockResult = $stockStatement->get_result();
+            $stockRow = $stockResult->fetch_assoc();
+            $availableQty = isset($stockRow['available_qty']) ? (int) $stockRow['available_qty'] : 0;
+            $actualQty = (int) $actualRow['actual_qty'];
+
+            if (($availableQty - $actualQty) < 0) {
+                $remainingQtyAfterDelete = $availableQty - $actualQty;
+
+                http_response_code(409);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Insufficient stock to delete this data. Remaining qty: ' . $availableQty,
+                    'available_qty' => $availableQty,
+                    'delete_qty' => $actualQty,
+                    'remaining_qty_after_delete' => $remainingQtyAfterDelete,
+                ]);
+                exit;
+            }
+        }
+
         $statement = $connection->prepare("DELETE FROM production_actuals WHERE actual_id = ?");
 
         if (!$statement) {
