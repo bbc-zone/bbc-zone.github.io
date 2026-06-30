@@ -376,6 +376,10 @@ select {
   width: 100%;
 }
 
+.data-card-list {
+  display: none;
+}
+
 .datatable {
   display: grid;
   gap: 10px;
@@ -585,6 +589,15 @@ select {
 .data-table td {
   color: #263640;
   font-size: 14px;
+}
+
+.data-card-empty {
+  color: #647481;
+  font-size: 14px;
+  font-weight: 800;
+  margin: 0;
+  padding: 16px;
+  text-align: center;
 }
 
 .table-badge {
@@ -953,6 +966,61 @@ select {
 
   .table-filters {
     grid-template-columns: 1fr;
+  }
+
+  .data-table-wrap {
+    display: none;
+  }
+
+  .data-card-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .data-card-row {
+    background: #ffffff;
+    border: 1px solid #edf1f4;
+    border-radius: 8px;
+    display: grid;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .data-card-field {
+    align-items: start;
+    border-bottom: 1px solid #f0f4f6;
+    display: grid;
+    gap: 4px;
+    grid-template-columns: minmax(92px, 35%) minmax(0, 1fr);
+    padding-bottom: 9px;
+  }
+
+  .data-card-field:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .data-card-field > span {
+    color: #647481;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .data-card-field > div {
+    color: #263640;
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .data-card-field.action-field {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .data-card-field.action-field .row-actions {
+    justify-content: flex-start;
   }
 
   .datatable-top,

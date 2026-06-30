@@ -102,6 +102,8 @@ export function DataTable({
     return sortConfig.direction === 'asc' ? <ArrowUp size={14} /> : <ArrowDown size={14} />;
   };
 
+  const renderCell = (column, row, index) => (column.render ? column.render(row, index) : row[column.key]);
+
   return (
     <div className="datatable">
       <div className="datatable-top">
@@ -141,7 +143,7 @@ export function DataTable({
             {visibleRows.map((row, index) => (
               <tr key={rowKey(row, startIndex + index)}>
                 {columns.map((column) => (
-                  <td key={column.key}>{column.render ? column.render(row, startIndex + index) : row[column.key]}</td>
+                  <td key={column.key}>{renderCell(column, row, startIndex + index)}</td>
                 ))}
               </tr>
             ))}
@@ -152,6 +154,23 @@ export function DataTable({
             ) : null}
           </tbody>
         </table>
+      </div>
+
+      <div className="data-card-list">
+        {visibleRows.map((row, index) => (
+          <article className="data-card-row" key={rowKey(row, startIndex + index)}>
+            {columns.map((column) => (
+              <div
+                className={column.key === 'action' ? 'data-card-field action-field' : 'data-card-field'}
+                key={column.key}
+              >
+                <span>{column.header}</span>
+                <div>{renderCell(column, row, startIndex + index)}</div>
+              </div>
+            ))}
+          </article>
+        ))}
+        {visibleRows.length === 0 ? <p className="data-card-empty">{emptyText}</p> : null}
       </div>
 
       <div className="datatable-bottom">
