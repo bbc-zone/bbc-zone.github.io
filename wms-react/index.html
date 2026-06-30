@@ -11,6 +11,16 @@
     <meta name="application-name" content="React WMS" />
     <meta name="apple-mobile-web-app-title" content="React WMS" />
     <meta name="theme-color" content="#101820" />
+    <script>
+      (() => {
+        const githubPagesRoot = '/wms-react/';
+        const rootPaths = [githubPagesRoot, `${githubPagesRoot}index.html`];
+
+        if (window.location.hostname === 'bbc-zone.github.io' && rootPaths.includes(window.location.pathname)) {
+          window.location.replace(`${githubPagesRoot}dist/${window.location.search}${window.location.hash}`);
+        }
+      })();
+    </script>
     <link rel="canonical" href="https://bbc-zone.github.io/wms-react/" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
