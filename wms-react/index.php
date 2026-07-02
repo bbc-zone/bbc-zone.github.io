@@ -733,6 +733,38 @@ if ($resource === 'final-step') {
             exit;
         }
 
+        $actualTotalStatement = $connection->prepare("
+            SELECT COALESCE(SUM(actual_qty), 0) AS actual_qty_total
+            FROM production_actuals
+            WHERE plan_id = ?
+        ");
+
+        if (!$actualTotalStatement) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to check production actual qty',
+                'error' => $connection->error,
+            ]);
+            exit;
+        }
+
+        $actualTotalStatement->bind_param('i', $planId);
+        $actualTotalStatement->execute();
+        $actualTotalResult = $actualTotalStatement->get_result();
+        $actualTotalRow = $actualTotalResult->fetch_assoc();
+        $actualQtyTotal = isset($actualTotalRow['actual_qty_total']) ? (int) $actualTotalRow['actual_qty_total'] : 0;
+
+        if ($planQty < $actualQtyTotal) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Plan qty cannot be less than actual qty',
+                'actual_qty_total' => $actualQtyTotal,
+            ]);
+            exit;
+        }
+
         $statement = $connection->prepare("
             UPDATE production_plans
             SET item_id = ?, plan_qty = ?, plan_date = ?
@@ -941,6 +973,38 @@ if ($resource === 'delivery-plans') {
             echo json_encode([
                 'success' => false,
                 'message' => 'Delivery ID, item code, delivery no, delivery date, customer, and delivery qty are required',
+            ]);
+            exit;
+        }
+
+        $actualTotalStatement = $connection->prepare("
+            SELECT COALESCE(SUM(actual_qty), 0) AS actual_qty_total
+            FROM delivery_actuals
+            WHERE plan_id = ?
+        ");
+
+        if (!$actualTotalStatement) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to check delivery actual qty',
+                'error' => $connection->error,
+            ]);
+            exit;
+        }
+
+        $actualTotalStatement->bind_param('i', $delivId);
+        $actualTotalStatement->execute();
+        $actualTotalResult = $actualTotalStatement->get_result();
+        $actualTotalRow = $actualTotalResult->fetch_assoc();
+        $actualQtyTotal = isset($actualTotalRow['actual_qty_total']) ? (int) $actualTotalRow['actual_qty_total'] : 0;
+
+        if ($deliveryQty < $actualQtyTotal) {
+            http_response_code(422);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Delivery qty cannot be less than actual qty',
+                'actual_qty_total' => $actualQtyTotal,
             ]);
             exit;
         }

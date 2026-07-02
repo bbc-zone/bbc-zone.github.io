@@ -56,7 +56,7 @@ export function ItemReportList() {
       return true;
     }
 
-    return [row.item_code, row.item_name, row.qty_in, row.qty_out, row.available_qty]
+    return [row.item_code, row.item_name, row.available_qty]
       .join(' ')
       .toLowerCase()
       .includes(keyword);
@@ -90,16 +90,6 @@ export function ItemReportList() {
     {
       key: 'item_name',
       header: 'Item Name',
-    },
-    {
-      key: 'qty_in',
-      header: 'Qty In',
-      render: (row) => renderQty(row.qty_in, 'qty-in'),
-    },
-    {
-      key: 'qty_out',
-      header: 'Qty Out',
-      render: (row) => renderQty(row.qty_out, 'qty-out'),
     },
     {
       key: 'available_qty',

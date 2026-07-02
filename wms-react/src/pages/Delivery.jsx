@@ -16,6 +16,7 @@ const emptyDeliveryForm = {
   delivery_date: '',
   customer: '',
   delivery_qty: 0,
+  actual_qty_total: 0,
 };
 
 const deliveryFilterStorageKey = 'wms-delivery-filters';
@@ -126,6 +127,7 @@ export function Delivery({ onOpenDeliveryActual }) {
       delivery_date: deliveryPlan.delivery_date || '',
       customer: deliveryPlan.customer,
       delivery_qty: deliveryPlan.delivery_qty,
+      actual_qty_total: deliveryPlan.actual_qty_total || 0,
     });
     setDeliveryFormOpen(true);
     setDeliveryError('');
@@ -144,6 +146,12 @@ export function Delivery({ onOpenDeliveryActual }) {
     setDeliverySaving(true);
     setDeliveryError('');
 
+    if (deliveryForm.deliv_id && Number(deliveryForm.delivery_qty) < Number(deliveryForm.actual_qty_total || 0)) {
+      setDeliverySaving(false);
+      setDeliveryError('Delivery qty cannot be less than actual qty');
+      return;
+    }
+
     const action = deliveryForm.deliv_id ? updateDeliveryPlan(deliveryForm) : createDeliveryPlan(deliveryForm);
 
     action
@@ -160,6 +168,10 @@ export function Delivery({ onOpenDeliveryActual }) {
   };
 
   const removeDeliveryPlan = (deliveryPlan) => {
+    if ((deliveryPlan.status || 'Open') !== 'Open') {
+      return;
+    }
+
     const confirmed = window.confirm(`Hapus delivery plan ${deliveryPlan.delivery_code}?`);
 
     if (!confirmed) {
@@ -283,6 +295,7 @@ export function Delivery({ onOpenDeliveryActual }) {
           <button
             type="button"
             className="danger-button"
+            disabled={(deliveryPlan.status || 'Open') !== 'Open'}
             aria-label="Hapus delivery plan"
             onClick={() => removeDeliveryPlan(deliveryPlan)}
           >
@@ -351,7 +364,7 @@ export function Delivery({ onOpenDeliveryActual }) {
           <label>
             Delivery Qty
             <input
-              min="1"
+              min={deliveryForm.deliv_id ? Math.max(1, Number(deliveryForm.actual_qty_total || 0)) : 1}
               name="delivery_qty"
               type="number"
               value={deliveryForm.delivery_qty}

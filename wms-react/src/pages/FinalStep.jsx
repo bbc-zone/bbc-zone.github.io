@@ -14,6 +14,7 @@ const emptyPlanForm = {
   item_id: '',
   plan_qty: 0,
   plan_date: '',
+  actual_qty_total: 0,
 };
 
 const finalStepFilterStorageKey = 'wms-final-step-filters';
@@ -117,6 +118,7 @@ export function FinalStep({ onOpenProductionActual }) {
       item_id: plan.item_id,
       plan_qty: plan.plan_qty,
       plan_date: plan.plan_date || '',
+      actual_qty_total: plan.actual_qty_total || 0,
     });
     setPlanFormOpen(true);
     setPlanError('');
@@ -135,6 +137,12 @@ export function FinalStep({ onOpenProductionActual }) {
     setPlanSaving(true);
     setPlanError('');
 
+    if (planForm.plan_id && Number(planForm.plan_qty) < Number(planForm.actual_qty_total || 0)) {
+      setPlanSaving(false);
+      setPlanError('Plan qty cannot be less than actual qty');
+      return;
+    }
+
     const action = planForm.plan_id ? updateFinalStep(planForm) : createFinalStep(planForm);
 
     action
@@ -151,6 +159,10 @@ export function FinalStep({ onOpenProductionActual }) {
   };
 
   const removePlan = (plan) => {
+    if ((plan.status || 'Open') !== 'Open') {
+      return;
+    }
+
     const confirmed = window.confirm(`Hapus production plan #${plan.plan_id}?`);
 
     if (!confirmed) {
@@ -245,6 +257,7 @@ export function FinalStep({ onOpenProductionActual }) {
           <button
             type="button"
             className="danger-button"
+            disabled={(plan.status || 'Open') !== 'Open'}
             aria-label="Hapus production plan"
             onClick={() => removePlan(plan)}
           >
@@ -290,7 +303,7 @@ export function FinalStep({ onOpenProductionActual }) {
           <label>
             Plan Qty
             <input
-              min="1"
+              min={planForm.plan_id ? Math.max(1, Number(planForm.actual_qty_total || 0)) : 1}
               name="plan_qty"
               type="number"
               value={planForm.plan_qty}

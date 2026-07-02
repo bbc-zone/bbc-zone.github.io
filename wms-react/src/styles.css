@@ -851,6 +851,11 @@ select {
   width: 34px;
 }
 
+.row-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
 .danger-button {
   background: #ffebeb !important;
   border-color: #ffd2d2 !important;
