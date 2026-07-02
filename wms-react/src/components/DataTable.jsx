@@ -24,6 +24,7 @@ function compareValues(firstValue, secondValue) {
 }
 
 export function DataTable({
+  className = '',
   columns,
   emptyText = 'Data tidak ditemukan',
   initialSortDirection = 'asc',
@@ -105,7 +106,7 @@ export function DataTable({
   const renderCell = (column, row, index) => (column.render ? column.render(row, index) : row[column.key]);
 
   return (
-    <div className="datatable">
+    <div className={className ? `datatable ${className}` : 'datatable'}>
       <div className="datatable-top">
         <label>
           Show

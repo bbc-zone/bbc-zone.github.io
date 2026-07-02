@@ -74,7 +74,11 @@ export function Sidebar({ activePage, onNavigate, onClose }) {
 
         <div className="nav-group">
           <span className="nav-heading">WMS Report</span>
-          <a className="nav-link nav-child" href="#" onClick={onClose}>
+          <a
+            className={activePage === 'item-report-list' ? 'nav-link nav-child active' : 'nav-link nav-child'}
+            href="#"
+            onClick={(event) => onNavigate(event, 'item-report-list')}
+          >
             <FileText size={18} />
             Item Report List
           </a>

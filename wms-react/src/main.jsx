@@ -8,6 +8,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Delivery } from './pages/Delivery';
 import { DeliveryActual } from './pages/DeliveryActual';
 import { FinalStep } from './pages/FinalStep';
+import { ItemReportList } from './pages/ItemReportList';
 import { ItemMaster } from './pages/ItemMaster';
 import { ProductionActual } from './pages/ProductionActual';
 import './styles.css';
@@ -17,6 +18,7 @@ const pageTitles = {
   'final-step': 'Final Step',
   delivery: 'Delivery',
   'delivery-actual': 'Delivery Actual',
+  'item-report-list': 'Item Report List',
   'item-master': 'Item Master',
   'production-actual': 'Production Actual',
 };
@@ -163,6 +165,10 @@ function App() {
           }}
         />
       );
+    }
+
+    if (activePage === 'item-report-list') {
+      return <ItemReportList />;
     }
 
     if (activePage === 'production-actual') {

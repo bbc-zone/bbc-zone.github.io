@@ -178,6 +178,97 @@ function ensureDeliveryActualsTable($connection)
     }
 }
 
+function getStockMovementTable($connection)
+{
+    $stockMovementResult = $connection->query("SHOW TABLES LIKE 'stock_movement'");
+
+    if ($stockMovementResult && $stockMovementResult->num_rows > 0) {
+        return 'stock_movement';
+    }
+
+    $stockMovementResult = $connection->query("SHOW TABLES LIKE 'stock_movements'");
+
+    if ($stockMovementResult && $stockMovementResult->num_rows > 0) {
+        return 'stock_movements';
+    }
+
+    return null;
+}
+
+function getStockMovementUniqueCodeColumn($connection, $stockMovementTable)
+{
+    $columnResult = $connection->query("SHOW COLUMNS FROM `$stockMovementTable` LIKE 'Unique_Code'");
+
+    if ($columnResult && $columnResult->num_rows > 0) {
+        return 'Unique_Code';
+    }
+
+    $columnResult = $connection->query("SHOW COLUMNS FROM `$stockMovementTable` LIKE 'barcode'");
+
+    if ($columnResult && $columnResult->num_rows > 0) {
+        return 'barcode';
+    }
+
+    return null;
+}
+
+function getAvailableStockQty($connection, $barcode)
+{
+    $stockMovementTable = getStockMovementTable($connection);
+
+    if (!$stockMovementTable) {
+        sendJsonResponse([
+            'success' => false,
+            'message' => 'Stock movement table was not found',
+        ], 500);
+    }
+
+    $uniqueCodeColumn = getStockMovementUniqueCodeColumn($connection, $stockMovementTable);
+
+    if (!$uniqueCodeColumn) {
+        sendJsonResponse([
+            'success' => false,
+            'message' => 'Stock movement unique code column was not found',
+        ], 500);
+    }
+
+    $stockStatement = $connection->prepare("
+        SELECT COALESCE(SUM(qty_in - qty_out), 0) AS available_qty
+        FROM `$stockMovementTable`
+        WHERE `$uniqueCodeColumn` = ?
+    ");
+
+    if (!$stockStatement) {
+        sendJsonResponse([
+            'success' => false,
+            'message' => 'Failed to prepare stock movement check',
+            'error' => $connection->error,
+        ], 500);
+    }
+
+    $stockStatement->bind_param('s', $barcode);
+    $stockStatement->execute();
+    $stockResult = $stockStatement->get_result();
+    $stockRow = $stockResult->fetch_assoc();
+
+    return isset($stockRow['available_qty']) ? (int) $stockRow['available_qty'] : 0;
+}
+
+function validateAvailableStockQty($connection, $barcode, $requestedQty)
+{
+    $availableQty = getAvailableStockQty($connection, $barcode);
+
+    if ($availableQty < $requestedQty) {
+        sendJsonResponse([
+            'success' => false,
+            'message' => 'Insufficient stock for this UniqueCode. Available qty: ' . $availableQty . ', requested qty: ' . $requestedQty,
+            'unique_code' => $barcode,
+            'available_qty' => $availableQty,
+            'requested_qty' => $requestedQty,
+        ], 409);
+    }
+}
+
 set_error_handler(function ($severity, $message, $file, $line) {
     if (!(error_reporting() & $severity)) {
         return false;
@@ -1064,6 +1155,8 @@ if ($resource === 'delivery-actual') {
             exit;
         }
 
+        validateAvailableStockQty($connection, $uniqueCode, $actualQty);
+
         $actualDateTime = date('Y-m-d H:i:s');
         $statement = $connection->prepare("
             INSERT INTO delivery_actuals (unique_code, plan_id, actual_date, actual_qty, remarks)
@@ -1118,6 +1211,7 @@ if ($resource === 'delivery-actual') {
         $actualPlanStatement = $connection->prepare("
             SELECT
                 da.actual_id,
+                da.unique_code AS current_unique_code,
                 da.actual_qty AS current_actual_qty,
                 dp.delivery_qty,
                 COALESCE(total_actual.actual_qty_total, 0) AS actual_qty_total
@@ -1168,6 +1262,16 @@ if ($resource === 'delivery-actual') {
                 'remaining_qty' => $editableRemainingQty,
             ]);
             exit;
+        }
+
+        $currentUniqueCode = $actualPlanRow['current_unique_code'];
+        $currentActualQty = (int) $actualPlanRow['current_actual_qty'];
+        $stockCheckQty = $currentUniqueCode === $uniqueCode
+            ? max($actualQty - $currentActualQty, 0)
+            : $actualQty;
+
+        if ($stockCheckQty > 0) {
+            validateAvailableStockQty($connection, $uniqueCode, $stockCheckQty);
         }
 
         $statement = $connection->prepare("
@@ -1361,6 +1465,122 @@ if ($resource === 'delivery-actual') {
     exit;
 }
 
+if ($resource === 'item-report-list') {
+    $stockMovementTable = getStockMovementTable($connection);
+
+    if (!$stockMovementTable) {
+        sendJsonResponse([
+            'success' => false,
+            'message' => 'Stock movement table was not found',
+        ], 500);
+    }
+
+    $uniqueCodeColumn = getStockMovementUniqueCodeColumn($connection, $stockMovementTable);
+
+    if (!$uniqueCodeColumn) {
+        sendJsonResponse([
+            'success' => false,
+            'message' => 'Stock movement unique code column was not found',
+        ], 500);
+    }
+
+    $stockPerItemResult = $connection->query("
+        SELECT
+            COALESCE(im.item_code, '-') AS item_code,
+            COALESCE(im.item_name, '-') AS item_name,
+            COALESCE(SUM(sm.qty_in), 0) AS qty_in,
+            COALESCE(SUM(sm.qty_out), 0) AS qty_out,
+            COALESCE(SUM(sm.qty_in - sm.qty_out), 0) AS available_qty
+        FROM `$stockMovementTable` sm
+        LEFT JOIN production_actuals pa ON pa.unique_code = sm.`$uniqueCodeColumn`
+        LEFT JOIN production_plans pp ON pp.plan_id = pa.plan_id
+        LEFT JOIN item_master im ON im.id = pp.item_id
+        GROUP BY im.item_code, im.item_name
+        ORDER BY im.item_code ASC
+    ");
+
+    if (!$stockPerItemResult) {
+        sendJsonResponse([
+            'success' => false,
+            'message' => 'Failed to read stock per item',
+            'error' => $connection->error,
+        ], 500);
+    }
+
+    $stockPerItemRows = array();
+
+    while ($row = $stockPerItemResult->fetch_assoc()) {
+        $stockPerItemRows[] = array(
+            'item_code' => $row['item_code'],
+            'item_name' => $row['item_name'],
+            'qty_in' => (int) $row['qty_in'],
+            'qty_out' => (int) $row['qty_out'],
+            'available_qty' => (int) $row['available_qty'],
+        );
+    }
+
+    $stockMovementResult = $connection->query("
+        SELECT
+            sm.report_id,
+            sm.`$uniqueCodeColumn` AS unique_code,
+            COALESCE(im.item_code, '-') AS item_code,
+            COALESCE(im.item_name, '-') AS item_name,
+            sm.type_id,
+            COALESCE(tm.type_name, CASE
+                WHEN sm.qty_in > 0 THEN 'Stock In'
+                WHEN sm.qty_out > 0 THEN 'Stock Out'
+                ELSE CONCAT('Type ', sm.type_id)
+            END) AS type_name,
+            sm.actual_id,
+            sm.qty_in,
+            sm.qty_out,
+            (sm.qty_in - sm.qty_out) AS qty_balance,
+            sm.remarks,
+            pa.actual_date
+        FROM `$stockMovementTable` sm
+        LEFT JOIN production_actuals pa ON pa.unique_code = sm.`$uniqueCodeColumn`
+        LEFT JOIN production_plans pp ON pp.plan_id = pa.plan_id
+        LEFT JOIN item_master im ON im.id = pp.item_id
+        LEFT JOIN type_master tm ON tm.type_id = sm.type_id
+        ORDER BY sm.report_id DESC
+    ");
+
+    if (!$stockMovementResult) {
+        sendJsonResponse([
+            'success' => false,
+            'message' => 'Failed to read stock movement',
+            'error' => $connection->error,
+        ], 500);
+    }
+
+    $stockMovementRows = array();
+
+    while ($row = $stockMovementResult->fetch_assoc()) {
+        $stockMovementRows[] = array(
+            'report_id' => (int) $row['report_id'],
+            'unique_code' => $row['unique_code'],
+            'item_code' => $row['item_code'],
+            'item_name' => $row['item_name'],
+            'type_id' => (int) $row['type_id'],
+            'type_name' => $row['type_name'],
+            'actual_id' => (int) $row['actual_id'],
+            'qty_in' => (int) $row['qty_in'],
+            'qty_out' => (int) $row['qty_out'],
+            'qty_balance' => (int) $row['qty_balance'],
+            'remarks' => $row['remarks'],
+            'actual_date' => $row['actual_date'],
+        );
+    }
+
+    echo json_encode([
+        'success' => true,
+        'message' => 'Item report list was read successfully',
+        'stock_per_item' => $stockPerItemRows,
+        'stock_movements' => $stockMovementRows,
+    ]);
+    exit;
+}
+
 if ($resource === 'production-actual') {
     $input = json_decode(file_get_contents('php://input'), true);
 
@@ -1438,8 +1658,7 @@ if ($resource === 'production-actual') {
         $itemCodePrefix = substr(strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $planRow['item_code'])), 0, 2);
         $itemCodePrefix = str_pad($itemCodePrefix, 2, '0', STR_PAD_RIGHT);
         $actualCodeDate = date('Ymd', strtotime($actualDateTime));
-        $actualCodeTime = date('His', strtotime($actualDateTime));
-        $uniqueCodePrefix = $itemCodePrefix . $actualCodeDate . $actualCodeTime;
+        $uniqueCodePrefix = $itemCodePrefix . $actualCodeDate;
         $sequenceStatement = $connection->prepare("
             SELECT MAX(CAST(RIGHT(unique_code, 6) AS UNSIGNED)) AS last_sequence
             FROM production_actuals

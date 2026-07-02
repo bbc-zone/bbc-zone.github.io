@@ -146,6 +146,10 @@ export function deleteItemMaster(id) {
   });
 }
 
+export function getItemReportList() {
+  return apiRequest('index.php?resource=item-report-list');
+}
+
 export function getFinalStepList() {
   return apiRequest('index.php?resource=final-step');
 }
