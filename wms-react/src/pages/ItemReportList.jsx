@@ -28,8 +28,15 @@ export function ItemReportList() {
 
     getItemReportList()
       .then((data) => {
-        setStockPerItemRows(data.stock_per_item || []);
+        const nextStockPerItemRows = data.stock_per_item || [];
+        const selectedItemCode = window.sessionStorage.getItem('wms-item-report-selected-code');
+        const nextSelectedItem = selectedItemCode
+          ? nextStockPerItemRows.find((item) => item.item_code === selectedItemCode)
+          : null;
+
+        setStockPerItemRows(nextStockPerItemRows);
         setStockMovementRows(data.stock_movements || []);
+        setSelectedItem(nextSelectedItem || null);
         setReportStatus('success');
       })
       .catch((error) => {
@@ -41,11 +48,13 @@ export function ItemReportList() {
   }, [refreshKey]);
 
   const openItemMovement = (item) => {
+    window.sessionStorage.setItem('wms-item-report-selected-code', item.item_code);
     setSelectedItem(item);
     setSearch('');
   };
 
   const backToStockPerItem = () => {
+    window.sessionStorage.removeItem('wms-item-report-selected-code');
     setSelectedItem(null);
     setSearch('');
   };

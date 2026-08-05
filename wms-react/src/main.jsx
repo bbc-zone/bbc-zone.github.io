@@ -8,6 +8,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Delivery } from './pages/Delivery';
 import { DeliveryActual } from './pages/DeliveryActual';
 import { FinalStep } from './pages/FinalStep';
+import { Inventory } from './pages/Inventory';
 import { ItemReportList } from './pages/ItemReportList';
 import { ItemMaster } from './pages/ItemMaster';
 import { ProductionActual } from './pages/ProductionActual';
@@ -18,6 +19,7 @@ const pageTitles = {
   'final-step': 'Final Step',
   delivery: 'Delivery',
   'delivery-actual': 'Delivery Actual',
+  inventory: 'Inventory',
   'item-report-list': 'Item Report List',
   'item-master': 'Item Master',
   'production-actual': 'Production Actual',
@@ -140,6 +142,21 @@ function App() {
     setMenuOpen(false);
   };
 
+  const openDashboardPage = (page) => {
+    if (page !== 'production-actual') {
+      window.sessionStorage.removeItem('wms-selected-plan-id');
+      setSelectedPlanId(null);
+    }
+
+    if (page !== 'delivery-actual') {
+      window.sessionStorage.removeItem('wms-selected-delivery-id');
+      setSelectedDeliveryId(null);
+    }
+
+    setActivePage(page);
+    setMenuOpen(false);
+  };
+
   const pageTitle = pageTitles[activePage] || 'Dashboard WMS';
   const renderPage = () => {
     if (activePage === 'final-step') {
@@ -167,6 +184,10 @@ function App() {
       );
     }
 
+    if (activePage === 'inventory') {
+      return <Inventory />;
+    }
+
     if (activePage === 'item-report-list') {
       return <ItemReportList />;
     }
@@ -184,7 +205,7 @@ function App() {
       );
     }
 
-    return <Dashboard />;
+    return <Dashboard onNavigate={openDashboardPage} />;
   };
 
   return (

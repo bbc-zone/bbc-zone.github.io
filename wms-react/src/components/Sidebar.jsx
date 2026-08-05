@@ -66,7 +66,11 @@ export function Sidebar({ activePage, onNavigate, onClose }) {
             <Truck size={18} />
             Delivery
           </a>
-          <a className="nav-link nav-child" href="#" onClick={onClose}>
+          <a
+            className={activePage === 'inventory' ? 'nav-link nav-child active' : 'nav-link nav-child'}
+            href="#"
+            onClick={(event) => onNavigate(event, 'inventory')}
+          >
             <Boxes size={18} />
             Inventory
           </a>
