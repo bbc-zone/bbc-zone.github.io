@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Force HTTPS for every request.
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Keep the short CV URL working.
+RewriteRule ^my\.pdf$ /CV-Bayu_Bismantara.pdf [R=301,L,NC]
