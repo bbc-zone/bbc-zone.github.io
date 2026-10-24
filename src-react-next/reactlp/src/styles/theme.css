@@ -1,0 +1,147 @@
+/*
+Theme Name: Lumbung Nusantara
+Author: Bayu Bismantara
+Description: Modern Agricultural E-Commerce WordPress Theme untuk Penjualan Beras Berkualitas. Dibangun dengan semantic HTML5, Vanilla CSS, dan client-side state management untuk WhatsApp Checkout.
+Version: 1.0.2
+Tested up to: 6.7
+Requires at least: 6.0
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: lumbung-nusantara
+Tags: e-commerce, agriculture, rice-store, responsive-layout, custom-theme, clean, modern
+*/
+
+/* ==========================================================================
+   DESIGN TOKENS & CSS VARIABLES
+   ========================================================================== */
+:root {
+  /* Brand Palette */
+  --ln-primary: #1B4332;       /* Deep Forest / Paddy Green */
+  --ln-primary-hover: #143225;
+  --ln-primary-light: #245842;
+  --ln-secondary: #2D6A4F;     /* Emerald Agricultural Green */
+  --ln-secondary-light: #40916C;
+  --ln-gold: #D4A373;          /* Rice Gold / Harvest */
+  --ln-gold-hover: #BE8E5D;
+  --ln-gold-dark: #A26B38;
+  --ln-gold-light: #F3E5D8;
+  --ln-cream: #FAF7F0;         /* Soft Cream Background */
+  --ln-cream-alt: #F3ECE1;
+  --ln-white: #FFFFFF;
+  --ln-dark: #263238;          /* High contrast text */
+  --ln-muted: #607274;         /* Secondary muted text */
+  --ln-border: #E8E1D5;        /* Subtle divider borders */
+  --ln-accent: #B83F2E;        /* Promo Terracotta Red from 8.json */
+  --ln-accent-hover: #9E3324;
+  --ln-success: #2E7D32;
+  --ln-warning: #ED6C02;
+  --ln-danger: #D32F2F;
+
+  /* Typography */
+  --ln-font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --ln-font-serif: 'Zilla Slab', 'Playfair Display', Georgia, serif;
+  --ln-font-display: 'Outfit', var(--ln-font-sans);
+
+  /* Shadows */
+  --ln-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --ln-shadow-sm: 0 2px 6px rgba(27, 67, 50, 0.08);
+  --ln-shadow-md: 0 8px 24px rgba(27, 67, 50, 0.10);
+  --ln-shadow-lg: 0 16px 36px rgba(27, 67, 50, 0.14);
+  --ln-shadow-card: 0 4px 16px rgba(38, 50, 56, 0.06);
+
+  /* Radii */
+  --ln-radius-sm: 4px;
+  --ln-radius-md: 8px;
+  --ln-radius-lg: 14px;
+  --ln-radius-xl: 20px;
+  --ln-radius-pill: 9999px;
+
+  /* Transitions */
+  --ln-transition-fast: 0.15s ease-in-out;
+  --ln-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --ln-transition-slow: 0.4s ease;
+
+  /* Layout */
+  --ln-container-max: 1240px;
+  --ln-container-narrow: 960px;
+  --ln-header-height: 80px;
+}
+
+/* ==========================================================================
+   CSS RESET & BASE DEFAULTS
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--ln-font-sans);
+  color: var(--ln-dark);
+  background-color: var(--ln-cream);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg, picture, video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--ln-transition-fast);
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--ln-dark);
+  font-family: var(--ln-font-sans);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* Base Container */
+.ln-container {
+  width: 100%;
+  max-width: var(--ln-container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.ln-container-narrow {
+  width: 100%;
+  max-width: var(--ln-container-narrow);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}

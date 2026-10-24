@@ -1,0 +1,318 @@
+/**
+ * Lumbung Nusantara - Mobile-First Responsive Overrides
+ * Breakpoints: 1200px, 992px, 768px, 480px
+ */
+
+/* ==========================================================================
+   DESKTOP DOWN TO 1200px
+   ========================================================================== */
+@media (max-width: 1200px) {
+  .ln-products-grid-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .ln-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+/* ==========================================================================
+   TABLET BREAKPOINT: max-width 992px
+   ========================================================================== */
+@media (max-width: 992px) {
+  /* Navigation collapse to mobile */
+  .ln-nav {
+    position: fixed;
+    top: var(--ln-header-height);
+    left: -100%;
+    width: 320px;
+    height: calc(100vh - var(--ln-header-height));
+    background-color: var(--ln-white);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px 24px;
+    gap: 16px;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+    transition: left var(--ln-transition);
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  .ln-nav.active {
+    left: 0;
+  }
+
+  .ln-nav-link {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--ln-border);
+  }
+
+  .ln-mobile-toggle {
+    display: flex;
+  }
+
+  .ln-topbar {
+    display: none; /* Hide topbar on mobile to save precious vertical space */
+  }
+
+  /* Hero Section */
+  .ln-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    text-align: center;
+  }
+
+  .ln-hero-desc {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ln-hero-actions {
+    justify-content: center;
+  }
+
+  .ln-hero-stats {
+    justify-content: center;
+  }
+
+  .ln-hero-visual {
+    margin-top: 10px;
+  }
+
+  /* About / Story */
+  .ln-about-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 30px 20px;
+  }
+
+  /* Catalog Layout */
+  .ln-catalog-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ln-filter-card {
+    position: static;
+    margin-bottom: 24px;
+  }
+
+  /* Product Detail */
+  .ln-detail-grid {
+    grid-template-columns: 1fr;
+    padding: 24px;
+    gap: 32px;
+  }
+
+  .ln-gallery-main {
+    height: 340px;
+  }
+
+  /* Cart & Checkout Layout */
+  .ln-cart-layout,
+  .ln-checkout-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  /* Promo Banners */
+  .ln-promo-family {
+    grid-template-columns: 1fr;
+  }
+
+  .ln-promo-family-left,
+  .ln-promo-family-right {
+    padding: 36px 24px;
+    text-align: center;
+  }
+
+  .ln-promo-family-left .ln-badge {
+    align-self: center;
+  }
+
+  /* Specials 3 Columns */
+  .ln-specials-grid-3 {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Why Us 4 Columns */
+  .ln-why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Store Info */
+  .ln-store-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ln-store-col-left,
+  .ln-store-col-right {
+    padding: 36px 24px;
+  }
+
+  /* Contact Grid */
+  .ln-contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   MOBILE BREAKPOINT: max-width 768px
+   ========================================================================== */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+
+  :root {
+    --ln-header-height: 70px;
+  }
+
+  .ln-section {
+    padding: 48px 0;
+  }
+
+  .ln-section-title {
+    font-size: 1.85rem;
+  }
+
+  .ln-hero-title {
+    font-size: 2.5rem;
+  }
+
+  .ln-hero-desc {
+    font-size: 1.2rem;
+  }
+
+  .ln-hero-stats {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ln-products-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .ln-product-img-wrap {
+    height: 160px;
+  }
+
+  .ln-product-body {
+    padding: 14px;
+  }
+
+  .ln-product-title {
+    font-size: 1.05rem;
+  }
+
+  .ln-product-price {
+    font-size: 1.2rem;
+  }
+
+  .ln-seasonal-title {
+    font-size: 2.2rem;
+  }
+
+  .ln-seasonal-desc {
+    font-size: 1.15rem;
+  }
+
+  .ln-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ln-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .ln-footer-bottom-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Cart Table responsive card conversion on small screens */
+  .ln-cart-table thead {
+    display: none;
+  }
+
+  .ln-cart-table,
+  .ln-cart-table tbody,
+  .ln-cart-table tr,
+  .ln-cart-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .ln-cart-table tr {
+    margin-bottom: 20px;
+    border: 1px solid var(--ln-border);
+    border-radius: var(--ln-radius-md);
+    padding: 14px;
+    background: var(--ln-cream);
+  }
+
+  .ln-cart-table td {
+    border: none;
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ln-cart-table td:first-child {
+    border-bottom: 1px solid var(--ln-border);
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+
+  .ln-cart-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--ln-muted);
+  }
+
+  .ln-cart-table td:first-child::before {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   TINY MOBILE BREAKPOINT: max-width 480px
+   ========================================================================== */
+@media (max-width: 480px) {
+  .ln-brand-title {
+    font-size: 1.15rem;
+  }
+
+  .ln-hero-title {
+    font-size: 2.1rem;
+  }
+
+  .ln-products-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .ln-why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ln-btn {
+    padding: 10px 18px;
+    font-size: 0.88rem;
+  }
+
+  .ln-floating-wa span {
+    display: none; /* Icon only on extra small mobile */
+  }
+
+  .ln-floating-wa {
+    padding: 14px;
+    border-radius: 50%;
+  }
+}

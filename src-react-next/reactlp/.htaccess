@@ -1,0 +1,9 @@
+Options -MultiViews
+RewriteEngine On
+RewriteBase /ln/reactlp/
+RewriteRule ^$ dist/index.html [L]
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+RewriteRule ^assets/(.*)$ dist/assets/$1 [L]
+RewriteRule ^ dist/index.html [L]
