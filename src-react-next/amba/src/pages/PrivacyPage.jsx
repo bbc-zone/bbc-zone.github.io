@@ -1,0 +1,3 @@
+import { PageHero } from '../components/Shared.jsx';
+
+export default function PrivacyPage() { return <main><PageHero title="Kebijakan Privasi" description="Informasi tentang data yang disimpan oleh katalog lokal ini."/><div className="ln-container page-container"><article className="ln-content-box"><h2>Keranjang belanja</h2><p>Isi keranjang disimpan di penyimpanan lokal browser agar dapat dibuka kembali pada perangkat yang sama. Website ini tidak mengirim isi keranjang ke server.</p><h2>Pemesanan</h2><p>Saat Anda membuka GoFood, proses selanjutnya mengikuti layanan dan kebijakan privasi GoFood.</p><h2>Kontak</h2><p>Website ini tidak meminta data pribadi untuk melihat menu atau menggunakan keranjang.</p></article></div></main>; }
