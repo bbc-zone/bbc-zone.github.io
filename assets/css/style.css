@@ -436,6 +436,18 @@ html {
   background: linear-gradient(135deg, #0f3b57, #1fb5a8);
 }
 
+.visual-amba {
+  background: linear-gradient(135deg, #5b1b12, #f28c28);
+}
+
+.visual-lumbung {
+  background: linear-gradient(135deg, #14532d, #a3b83f);
+}
+
+.visual-service {
+  background: linear-gradient(135deg, #172554, #06b6d4);
+}
+
 .portfolio-footer {
   background: #101820;
   color: rgba(255, 255, 255, .7);
